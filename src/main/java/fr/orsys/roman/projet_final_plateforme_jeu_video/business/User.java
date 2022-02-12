@@ -43,8 +43,8 @@ public abstract class User {
 	private String motDePasse;
 	
 	@NotBlank(message="Merci de préciser une adresse email")
-	@Email(regexp = "^[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]+[a-zA-Z0-9]*+[-.]{0,1}+[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]@[a-zA-Z0-9-]+[.]{1}+[a-zA-Z]{2,6}$", 
-	message = "Il faut un email valide")
+//	@Email(regexp = "^[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]+[a-zA-Z0-9]*+[-.]{0,1}+[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]@[a-zA-Z0-9-]+[.]{1}+[a-zA-Z]{2,6}$", 
+//	message = "Il faut un email valide")
 	private String email;
 	
 	private LocalDateTime dateTime;
@@ -53,10 +53,12 @@ public abstract class User {
 		dateTime = LocalDateTime.now();
 	}
 
+	
+
 	public User(
 			@NotNull(message = "Le pseudo ne peut pas être vide") @NotBlank(message = "Le pseudo doit être complété") @Pattern(regexp = "^([A-Za-z0-9]+)*", message = "votre pseudo doit être composé uniquement de majuscule, minuscule et/ou chiffre") String pseudo,
 			@NotNull(message = "Le mot de passe ne peut pas être vide") @NotBlank(message = "Le mot de passe doit être complété") @Length(min = 6, message = "Mettre un mot de passe de minimum 6 caractères") String motDePasse,
-			@NotBlank(message = "Merci de préciser une adresse email") @Email(regexp = "^[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]+[a-zA-Z0-9]*+[-.]{0,1}+[a-zA-Z0-9]*[^!#$%&;:§'*+=?`{|}~^.-]@[a-zA-Z0-9-]+[.]{1}+[a-zA-Z]{2,6}$", message = "Il faut un email valide") String email) {
+			@NotBlank(message = "Merci de préciser une adresse email") String email) {
 		this();
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
