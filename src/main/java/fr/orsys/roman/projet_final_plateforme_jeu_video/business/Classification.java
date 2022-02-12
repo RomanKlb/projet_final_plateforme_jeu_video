@@ -20,7 +20,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(of = {"id", "nom"})
+@ToString(of = {"id", "name"})
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Classification {
@@ -31,16 +31,16 @@ public class Classification {
 	
 	@NotNull(message = "Le nom de la classification ne peut pas être vide")
 	@NotBlank(message = "Le nom de la classification doit être complété")
-	private String nom;
+	private String name;
 	
 	@OneToMany(mappedBy = "classification", fetch = FetchType.EAGER)
-	private List<Game> jeux;
+	private List<Game> games;
 
 	
 	public Classification(
-			@NotNull(message = "Le nom de la classification ne peut pas être vide") @NotBlank(message = "Le nom de la classification doit être complété") String nom) {
+			@NotNull(message = "Le nom de la classification ne peut pas être vide") @NotBlank(message = "Le nom de la classification doit être complété") String name) {
 		super();
-		this.nom = nom;
+		this.name = name;
 	}
 	
 	

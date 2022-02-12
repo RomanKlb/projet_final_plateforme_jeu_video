@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
@@ -32,24 +34,25 @@ public class UserController {
 	}
 	
 	@PostMapping("/gamer/save")
-	public Gamer addGamer(@Valid @RequestBody Gamer gamer,
+	public Gamer addGamer(@Valid @RequestBody UserGamerDto gamerDto,
 			BindingResult result) throws GamerAlreadyExistInDbException {
 		System.out.println("controller addGamer");
+		System.out.println(gamerDto);
 		if(result.hasErrors()) {
 			System.out.println("controller bindinresult addGamer");
 			return null;
 		} else {
-			return gamerService.saveUserGamer(gamer);
+			return gamerService.saveUserGamer(gamerDto);
 		}
 	}
 	
 	@PostMapping("/moderator/save")
-	public Moderator addModerator(@Valid @RequestBody Moderator moderator,
+	public Moderator addModerator(@Valid @RequestBody UserModeratorDto moderatorDto,
 			BindingResult result) throws ModeratorAlreadyExistInDbException {
 		if(result.hasErrors()) {
 			return null;
 		} else {
-			return moderatorService.saveUserModerator(moderator);
+			return moderatorService.saveUserModerator(moderatorDto);
 		}
 	}
 }

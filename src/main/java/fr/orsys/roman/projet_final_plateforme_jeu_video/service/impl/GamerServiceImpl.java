@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GamerRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
@@ -27,12 +28,12 @@ public class GamerServiceImpl implements GamerService{
 
 
 	@Override
-	public Gamer saveUserGamer(@Valid Gamer gamer) throws GamerAlreadyExistInDbException {
+	public Gamer saveUserGamer(@Valid UserGamerDto gamerDto) throws GamerAlreadyExistInDbException {
 		System.out.println("saveUserGamer");
-		if(gamerRepository.existsByEmail(gamer.getEmail())) {
+		if(gamerRepository.existsByEmail(gamerDto.getEmail())) {
 			throw new GamerAlreadyExistInDbException();
 		}
-		return gamerRepository.save(new Gamer(gamer.getPseudo(), passwordEncoder.encode(gamer.getMotDePasse()), gamer.getEmail(), gamer.getDateDeNaissance()));
+		return gamerRepository.save(new Gamer(gamerDto.getPseudo(), passwordEncoder.encode(gamerDto.getPassword()),gamerDto.getEmail(), gamerDto.getBirthDate()));
 	}
 	
 	

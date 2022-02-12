@@ -20,7 +20,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(of = {"id","description","dateEnvoi","note","dateModeration","joueur","moderateur","jeu" })
+@ToString(of = {"id","description","sendingDate","rating","moderatorDate","gamer","moderator","game" })
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Reviews {
@@ -32,33 +32,35 @@ public class Reviews {
 	@Length(max = 5000, message = "La description est maximum de 5000 caractères")
 	private String description;
 	
-	private LocalDateTime dateEnvoi;
+	private LocalDateTime sendingDate;
 	
 	@Range(min = 0, max = 5, message = "La notation est compris entre 0 et 5 étoiles")
-	private Float note;
+	private Float rating;
 	
-	private LocalDateTime dateModeration;
-	
-	@ManyToOne
-	private Gamer joueur;
+	private LocalDateTime moderatorDate;
 	
 	@ManyToOne
-	private Moderator moderateur;
+	private Gamer gamer;
 	
 	@ManyToOne
-	private Game jeu;
+	private Moderator moderator;
+	
+	@ManyToOne
+	private Game game;
 
 	public Reviews(@Length(max = 5000, message = "La description est maximum de 5000 caractères") String description,
-			LocalDateTime dateEnvoi,
-			@Range(min = 0, max = 5, message = "La notation est compris entre 0 et 5 étoiles") Float note,
-			Gamer joueur, Game jeu) {
+			LocalDateTime sendingDate,
+			@Range(min = 0, max = 5, message = "La notation est compris entre 0 et 5 étoiles") Float rating,
+			Gamer gamer, Game game) {
 		super();
 		this.description = description;
-		this.dateEnvoi = dateEnvoi;
-		this.note = note;
-		this.joueur = joueur;
-		this.jeu = jeu;
+		this.sendingDate = sendingDate;
+		this.rating = rating;
+		this.gamer = gamer;
+		this.game = game;
 	}
+
+	
 	
 	
 

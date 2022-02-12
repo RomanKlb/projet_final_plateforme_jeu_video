@@ -34,17 +34,17 @@ public class Game {
 	
 	@NotNull(message = "Le nom du jeu ne peut pas être vide")
 	@NotBlank(message = "Le nom du jeu doit être complété")
-	private String nom;
+	private String name;
 	
 	@Length(max = 10000, message = "La description est maximum de 10000 caractères")
 	private String description;
 	
-	private LocalDate dateSortie;
+	private LocalDate releaseDate;
 	
 	private String image;
 	
-	@OneToMany(mappedBy = "jeu", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Reviews> avis;
+	@OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Reviews> reviews;
 	
 	@ManyToOne
 	private Classification classification;
@@ -53,31 +53,32 @@ public class Game {
 	private Genre genre;
 	
 	@ManyToOne
-	private Editor editeur;
+	private Editor editor;
 	
 	@ManyToOne
-	private Platform plateforme;
+	private Platform platform;
 	
 	@ManyToOne
-	private BusinessModel modeleEconomique;
+	private BusinessModel businessModel;
 
 	public Game(
-			@NotNull(message = "Le nom du jeu ne peut pas être vide") @NotBlank(message = "Le nom du jeu doit être complété") String nom,
+			@NotNull(message = "Le nom du jeu ne peut pas être vide") @NotBlank(message = "Le nom du jeu doit être complété") String name,
 			@Length(max = 10000, message = "La description est maximum de 10000 caractères") String description,
-			LocalDate dateSortie, String image, Classification classification, Genre genre, Editor editeur,
-			Platform plateforme, BusinessModel modeleEconomique) {
+			LocalDate releaseDate, String image, List<Reviews> reviews, Classification classification, Genre genre,
+			Editor editor, Platform platform, BusinessModel businessModel) {
 		super();
-		this.nom = nom;
+		this.name = name;
 		this.description = description;
-		this.dateSortie = dateSortie;
+		this.releaseDate = releaseDate;
 		this.image = image;
+		this.reviews = reviews;
 		this.classification = classification;
 		this.genre = genre;
-		this.editeur = editeur;
-		this.plateforme = plateforme;
-		this.modeleEconomique = modeleEconomique;
+		this.editor = editor;
+		this.platform = platform;
+		this.businessModel = businessModel;
 	}
-	
-	
+
+
 	
 }
