@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GamerRepository;
@@ -46,6 +47,15 @@ public class GamerServiceImpl implements GamerService{
 	public Gamer findByIdGamer(Long id) {
 		log.info("Service findByIdGamer");
 		return gamerRepository.findById(id).orElseThrow();
+	}
+
+
+
+	@Override
+	public Gamer updatePasswordGamer(Long id, PasswordDto passwordDto) {
+		Gamer gamer = gamerRepository.findById(id).orElseThrow();
+		gamer.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+		return gamer;
 	}
 	
 	

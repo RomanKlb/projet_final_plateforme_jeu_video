@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ModeratorRepository;
@@ -42,6 +43,14 @@ public class ModeratorServiceImpl implements ModeratorService{
 	public Moderator findByIdModerator(Long id) {
 		log.info("Service findByIdModerator");
 		return moderatorRepository.findById(id).orElseThrow();
+	}
+
+
+	@Override
+	public Moderator updatePasswordModerator(Long id, PasswordDto passwordDto) {
+		Moderator moderator = moderatorRepository.findById(id).orElseThrow();
+		moderator.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+		return moderator;
 	}
 
 }
