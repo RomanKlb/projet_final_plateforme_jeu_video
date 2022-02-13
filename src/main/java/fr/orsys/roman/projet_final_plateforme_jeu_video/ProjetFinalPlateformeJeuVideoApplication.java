@@ -12,10 +12,4 @@ public class ProjetFinalPlateformeJeuVideoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetFinalPlateformeJeuVideoApplication.class, args);
 	}
-	
-	@Bean
-	public void init() {
-		System.out.println("Test");
-	}
-
 }

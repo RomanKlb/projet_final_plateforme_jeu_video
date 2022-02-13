@@ -2,10 +2,13 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ClassificationRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 
+@Service
 public class ClassificationServiceImpl implements ClassificationService {
 	
 	private final ClassificationRepository cRepo;

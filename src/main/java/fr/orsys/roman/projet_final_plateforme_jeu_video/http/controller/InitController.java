@@ -2,25 +2,27 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl.ClassificationServiceImpl;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl.PlatformServiceImpl;
 
 @Controller
 public class InitController {
 	
-	@Autowired
-	private ClassificationService classificationService;
-	
-	/*public InitController(ClassificationService classificationService) {
+	private ClassificationServiceImpl classificationService;
+	private PlatformServiceImpl platformService;
+
+	public InitController(ClassificationServiceImpl classificationService, PlatformServiceImpl platformService) {
 		this.classificationService = classificationService;
-	}*/
+		this.platformService = platformService;
+	}
 	
 	@PostConstruct
 	private void init() {
 		initClassifications();
+		initPlatforms();
 	}
 	
 	private void initClassifications() {
@@ -36,6 +38,12 @@ public class InitController {
 			classificationService.createClassification(pegi16);
 			classificationService.createClassification(pegi18);
 		}
+	}
+	
+	private void initPlatforms() {
+		/*if(platformService.getPlatforms().size() < 1) {
+			
+		}*/
 	}
 	
 }
