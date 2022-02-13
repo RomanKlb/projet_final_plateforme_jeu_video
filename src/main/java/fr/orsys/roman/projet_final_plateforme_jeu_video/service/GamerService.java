@@ -11,4 +11,6 @@ public interface GamerService {
 
 	Gamer saveUserGamer(@Valid UserGamerDto gamerDto) throws GamerAlreadyExistInDbException;
 
+	Gamer findByIdGamer(Long id);
+
 }

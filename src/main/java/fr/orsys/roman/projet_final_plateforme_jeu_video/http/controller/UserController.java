@@ -2,8 +2,12 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService
 @RequestMapping(path="/user")
 public class UserController {
 
+	Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private final GamerService gamerService;
 	private final ModeratorService moderatorService;
@@ -33,26 +38,45 @@ public class UserController {
 		this.moderatorService = moderatorService;
 	}
 	
+	/*
+	 * Gamer
+	 */
 	@PostMapping("/gamer/save")
 	public Gamer addGamer(@Valid @RequestBody UserGamerDto gamerDto,
 			BindingResult result) throws GamerAlreadyExistInDbException {
-		System.out.println("controller addGamer");
-		System.out.println(gamerDto);
+		log.info("controller addGamer");
 		if(result.hasErrors()) {
-			System.out.println("controller bindinresult addGamer");
+			log.info("controller bindinresult addGamer");
 			return null;
 		} else {
 			return gamerService.saveUserGamer(gamerDto);
 		}
 	}
 	
+	@GetMapping("/gamer/{id}")
+	public Gamer findByIdGamer(@PathVariable Long id) {
+		log.info("controller findByIdGamer");
+		return gamerService.findByIdGamer(id);
+	}
+	
+	/*
+	 * Moderator
+	 */
 	@PostMapping("/moderator/save")
 	public Moderator addModerator(@Valid @RequestBody UserModeratorDto moderatorDto,
 			BindingResult result) throws ModeratorAlreadyExistInDbException {
+		log.info("controller addModerator");
 		if(result.hasErrors()) {
+			log.info("controller bindinresult addModerator");
 			return null;
 		} else {
 			return moderatorService.saveUserModerator(moderatorDto);
 		}
+	}
+	
+	@GetMapping("/moderator/{id}")
+	public Moderator findByIdModerator(@PathVariable Long id) {
+		log.info("controller findByIdModerator");
+		return moderatorService.findByIdModerator(id);
 	}
 }
