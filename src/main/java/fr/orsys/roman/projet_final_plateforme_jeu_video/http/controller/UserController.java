@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
@@ -59,6 +61,12 @@ public class UserController {
 		return gamerService.findByIdGamer(id);
 	}
 	
+	@PatchMapping("/gamer/{id}/patchPassword")
+	public Gamer patchPasswordGamer(@PathVariable Long id, @RequestBody PasswordDto passwordDto) {
+		log.info("controller patchPasswordGamer");
+		return gamerService.updatePasswordGamer(id, passwordDto);
+	}
+	
 	/*
 	 * Moderator
 	 */
@@ -78,5 +86,11 @@ public class UserController {
 	public Moderator findByIdModerator(@PathVariable Long id) {
 		log.info("controller findByIdModerator");
 		return moderatorService.findByIdModerator(id);
+	}
+	
+	@PatchMapping("/moderator/{id}/patchPassword")
+	public Moderator patchPasswordModerator(@PathVariable Long id, @RequestBody PasswordDto passwordDto) {
+		log.info("controller patchPasswordModerator");
+		return moderatorService.updatePasswordModerator(id, passwordDto);
 	}
 }
