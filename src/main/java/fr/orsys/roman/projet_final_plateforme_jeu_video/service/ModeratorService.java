@@ -10,4 +10,6 @@ public interface ModeratorService {
 
 	Moderator saveUserModerator(@Valid UserModeratorDto moderatorDto) throws ModeratorAlreadyExistInDbException;
 
+	Moderator findByIdModerator(Long id);
+
 }
