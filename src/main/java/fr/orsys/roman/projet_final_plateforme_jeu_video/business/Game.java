@@ -20,12 +20,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString(of = {"id","name","description", "genre", "classification"})
 public class Game {
 
 	@Id

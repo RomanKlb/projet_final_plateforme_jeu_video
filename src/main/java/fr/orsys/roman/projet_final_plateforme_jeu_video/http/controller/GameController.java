@@ -38,13 +38,14 @@ public class GameController {
 	
 	@PostMapping("/save")
 	public Game addGame(@Valid @RequestBody Game game, BindingResult result) {
-		
+		log.info(game.toString());
+		System.out.println(game);
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
 				log.error(objectError.getDefaultMessage());
 			}
 		}
-		return this.gameService.saveGame(game);
+		return null;// this.gameService.saveGame(game);
 	}
 }
