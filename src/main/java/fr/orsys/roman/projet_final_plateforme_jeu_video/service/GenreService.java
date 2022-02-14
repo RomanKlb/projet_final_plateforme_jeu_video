@@ -7,5 +7,8 @@ public interface GenreService {
 	long count();
 
 	Genre addGenre(String name);
+	
+	long count();
 
+    Genre addGenre(String name);
 }

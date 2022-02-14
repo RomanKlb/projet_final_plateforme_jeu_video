@@ -9,26 +9,26 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-	private final GenreRepository genreRepository;
-	
-	
-	/**
-	 * @param genreRepository
-	 */
-	public GenreServiceImpl(GenreRepository genreRepository) {
-		this.genreRepository = genreRepository;
-	}
+    private final GenreRepository genreRepository;
 
 
-	@Override
-	public long count() {
-		return this.genreRepository.count();
-	}
+    /**
+     * @param genreRepository
+     */
+    public GenreServiceImpl(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
+    }
 
 
-	@Override
-	public Genre addGenre(String name) {
-		return this.genreRepository.save(new Genre(name));
-	}
+    @Override
+    public long count() {
+        return this.genreRepository.count();
+    }
+
+
+    @Override
+    public Genre addGenre(String name) {
+        return this.genreRepository.save(new Genre(name));
+    }
 
 }
