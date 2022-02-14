@@ -5,7 +5,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
 
 public interface GameService {
 
-	//Game saveGame(GameDto gameDto);
-	Game saveGame(Game game);
+	Game saveGame(GameDto gameDto);
+	//Game saveGame(Game game);
 
 }

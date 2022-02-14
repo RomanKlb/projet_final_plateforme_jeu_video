@@ -11,4 +11,5 @@ public interface PlatformService {
 	Platform getPlatformById(Long id);
 	
 	boolean deletePlatform(Long id);
+	List<Platform> getPlatormsByNames(List<String> platformNames);
 }

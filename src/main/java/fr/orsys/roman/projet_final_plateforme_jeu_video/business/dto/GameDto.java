@@ -1,6 +1,7 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,6 @@ public class GameDto {
 	String classificationName;
 	String genreName;
 	String editorName;
-	String platformName;
+	List<String> platformNames;
 	String businessModelName;
 }

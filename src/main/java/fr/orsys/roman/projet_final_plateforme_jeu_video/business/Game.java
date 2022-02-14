@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
@@ -58,9 +59,11 @@ public class Game {
     @ManyToOne
     private Editor editor;
 
-    @ManyToOne
+    /*@ManyToOne
     private Platform platform;
-
+*/
+    @ManyToMany
+    private List<Platform> platforms;
     @ManyToOne
     private BusinessModel businessModel;
 
@@ -78,7 +81,7 @@ public class Game {
         this.classification = classification;
         this.genre = genre;
         this.editor = editor;
-        this.platform = platform;
+        this.platforms = platforms;
         this.businessModel = businessModel;
     }
 
