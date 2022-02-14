@@ -23,7 +23,7 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
-@ToString(of = {"id","pseudo","email"})
+@ToString
 @EqualsAndHashCode
 public abstract class User {
 

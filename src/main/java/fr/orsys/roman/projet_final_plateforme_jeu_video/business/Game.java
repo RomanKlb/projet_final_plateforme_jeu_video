@@ -20,12 +20,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString
 public class Game {
 
 	@Id
@@ -43,7 +45,8 @@ public class Game {
 	
 	private String image;
 	
-	@OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	@OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Reviews> reviews;
 	
 	@ManyToOne
