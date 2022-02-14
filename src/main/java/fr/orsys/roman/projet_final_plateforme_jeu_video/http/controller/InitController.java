@@ -31,23 +31,20 @@ public class InitController {
 	
 	private void initClassifications() {
 		if(classificationService.getClassifications().size() < 1) {
-			Classification pegi3 = new Classification("PEGI 3");
-			Classification pegi7 = new Classification("PEGI 7");
-			Classification pegi12 = new Classification("PEGI 12");
-			Classification pegi16 = new Classification("PEGI 16");
-			Classification pegi18 = new Classification("PEGI 18");
-			classificationService.createClassification(pegi3);
-			classificationService.createClassification(pegi7);
-			classificationService.createClassification(pegi12);
-			classificationService.createClassification(pegi16);
-			classificationService.createClassification(pegi18);
+			classificationService.createClassification("PEGI 3");
+			classificationService.createClassification("PEGI 7");
+			classificationService.createClassification("PEGI 12");
+			classificationService.createClassification("PEGI 16");
+			classificationService.createClassification("PEGI 18");
 		}
 	}
 	
 	private void initPlatforms() {
-		/*if(platformService.getPlatforms().size() < 1) {
-			
-		}*/
+		if(platformService.getPlatforms().size() < 1) {
+			platformService.createPlatform("PlayStation");
+			platformService.createPlatform("PlayStation 2");
+			platformService.createPlatform("Xbox");
+		}
 	}
 	
 	private void initGenres() {

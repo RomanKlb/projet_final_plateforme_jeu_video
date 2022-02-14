@@ -1,37 +1,42 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 
-@Sql("/PlatformService.sql")
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PlatformServiceTest {
 
 	@Autowired
 	PlatformService platformService;
 	
 	@Test
+	@Order(3)
 	void testCreatePlatform() {
-		Platform xbox = new Platform("Xbox One");
-		platformService.createPlatform(xbox);
+		Platform p = platformService.createPlatform("Xbox One");
 		
-		assertTrue(platformService.getPlatforms().size() > 1);
-		assertEquals(platformService.getPlatformById(1L).getName(), "Xbox One");
+		assertNotNull(p);
+		assertEquals("Xbox One", p.getName());
+		
+		assertTrue(platformService.getPlatforms().size() > 3);
+		assertEquals(platformService.getPlatformById(4L).getName(), "Xbox One");
 	}
 
 	@Test
+	@Order(1)
 	void testGetPlatforms() {
 		List<Platform> platforms = platformService.getPlatforms();
 		
@@ -41,6 +46,7 @@ class PlatformServiceTest {
 	}
 
 	@Test
+	@Order(2)
 	void testGetPlatformById() {
 		Platform platform = platformService.getPlatformById(1L);
 		
@@ -50,13 +56,13 @@ class PlatformServiceTest {
 	}
 
 	@Test
+	@Order(4)
 	void testDeletePlatform() {
-		platformService.deletePlatform(1L);
-		Platform platform = platformService.getPlatformById(1L);
+		assertTrue(platformService.deletePlatform(3L));
+		Platform platform = platformService.getPlatformById(3L);
 		
 		
 		assertNull(platform);
-		assertNotEquals(platform.getName(), "PlayStation");
 	}
 
 }

@@ -11,32 +11,31 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationSe
 @Service
 public class ClassificationServiceImpl implements ClassificationService {
 	
-	private final ClassificationRepository cRepo;
+	private final ClassificationRepository classificationRepository;
 
-	public ClassificationServiceImpl(ClassificationRepository cRepo) {
-		this.cRepo = cRepo;
+	public ClassificationServiceImpl(ClassificationRepository repo) {
+		this.classificationRepository = repo;
 	}
 	
 	@Override
-	public Classification createClassification(Classification classification) {
-		cRepo.save(classification);
-		return classification;
+	public Classification createClassification(String name) {
+		return classificationRepository.save(new Classification(name));
 	}
 
 	@Override
 	public List<Classification> getClassifications() {
-		return cRepo.findAll();
+		return classificationRepository.findAll();
 	}
 
 	@Override
 	public Classification getClassificationById(Long id) {
-		return cRepo.findById(id).orElse(null);
+		return classificationRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public boolean deleteClassification(Long id) {
-		cRepo.deleteById(id);
-		return cRepo.existsById(id);
+		classificationRepository.deleteById(id);
+		return !classificationRepository.existsById(id);
 	}
 	
 }

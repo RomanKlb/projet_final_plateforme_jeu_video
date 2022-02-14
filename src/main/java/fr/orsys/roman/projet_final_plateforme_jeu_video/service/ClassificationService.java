@@ -6,7 +6,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
 
 public interface ClassificationService {
 	
-	Classification createClassification(Classification classification);
+	Classification createClassification(String name);
 	
 	List<Classification> getClassifications();
 	Classification getClassificationById(Long id);
