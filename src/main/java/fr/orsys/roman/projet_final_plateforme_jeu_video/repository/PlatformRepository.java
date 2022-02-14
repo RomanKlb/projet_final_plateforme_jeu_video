@@ -6,4 +6,6 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
 
+	Platform findByName(String platform);
+
 }
