@@ -20,7 +20,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(of = {"id", "name"})
+@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Classification {
@@ -33,7 +33,8 @@ public class Classification {
 	@NotBlank(message = "Le nom de la classification doit être complété")
 	private String name;
 	
-	@OneToMany(mappedBy = "classification", fetch = FetchType.EAGER)
+	@ToString.Exclude
+	@OneToMany(mappedBy = "classification", fetch = FetchType.LAZY)
 	private List<Game> games;
 
 	

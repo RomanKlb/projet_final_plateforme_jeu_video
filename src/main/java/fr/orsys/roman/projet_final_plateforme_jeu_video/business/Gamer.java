@@ -22,13 +22,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(of = {"birthDate"})
+@ToString(callSuper = true)
 public class Gamer extends User{
 
 	@Past(message = "La date de naissance doit être dans le passé")
 	private LocalDate birthDate;
 
-	@OneToMany(mappedBy = "gamer" , fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "gamer" , fetch = FetchType.LAZY)
 	private List<Reviews> avis;
 
 

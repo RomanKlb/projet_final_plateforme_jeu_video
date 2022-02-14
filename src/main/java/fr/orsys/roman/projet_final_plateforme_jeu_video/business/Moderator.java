@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 public class Moderator extends User{
 
 	@Length(min = 10, message = "votre numéro de téléphone est composé de 10 chiffres minimum")
