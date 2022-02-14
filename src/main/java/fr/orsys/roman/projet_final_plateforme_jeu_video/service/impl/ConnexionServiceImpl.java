@@ -41,8 +41,8 @@ public class ConnexionServiceImpl implements ConnexionService {
 
 		UserResponse userResponse = new UserResponse();
 
-		if(moderatorRepository.existsByEmail(loginFormDto.getEmail())) {
-			Optional<Moderator> moderator = moderatorRepository.findByEmail(loginFormDto.getEmail());
+		if(moderatorRepository.existsByPseudo(loginFormDto.getPseudo())) {
+			Optional<Moderator> moderator = moderatorRepository.findByPseudo(loginFormDto.getPseudo());
 			if(moderator.isPresent()) {
 
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), moderator.get().getPassword())) 
@@ -55,8 +55,8 @@ public class ConnexionServiceImpl implements ConnexionService {
 				userResponse.setAdmin(true);
 				userResponse.setPhoneNumber(moderator.get().getPhoneNumber());
 			}
-		} else if(gamerRepository.existsByEmail(loginFormDto.getEmail())) {
-			Optional<Gamer> gamer = gamerRepository.findByEmail(loginFormDto.getEmail());
+		} else if(gamerRepository.existsByPseudo(loginFormDto.getPseudo())) {
+			Optional<Gamer> gamer = gamerRepository.findByPseudo(loginFormDto.getPseudo());
 			if(gamer.isPresent()) {
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), gamer.get().getPassword())) 
 					return ResponseEntity.badRequest().build();

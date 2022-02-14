@@ -12,4 +12,5 @@ public interface ModeratorRepository extends JpaRepository<Moderator, Long>{
 	boolean existsByPseudo(String pseudo);
 	
 	Optional<Moderator> findByEmail(String email);
+	Optional<Moderator> findByPseudo(String pseudo);
 }

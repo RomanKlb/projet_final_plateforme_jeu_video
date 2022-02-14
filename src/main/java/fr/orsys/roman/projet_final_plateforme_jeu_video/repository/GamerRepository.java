@@ -14,5 +14,6 @@ public interface GamerRepository extends JpaRepository<Gamer, Long>{
 	boolean existsByPseudo(String pseudo);
 	
 	Optional<Gamer> findByEmail(String email);
+	Optional<Gamer> findByPseudo(String pseudo);
 
 }

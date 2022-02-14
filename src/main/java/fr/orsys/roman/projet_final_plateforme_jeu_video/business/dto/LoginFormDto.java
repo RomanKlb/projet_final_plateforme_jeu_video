@@ -14,10 +14,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"email","password"} )
-@EqualsAndHashCode(of = {"email", "password"})
+@ToString(of = {"pseudo","password"} )
+@EqualsAndHashCode(of = {"pseudo", "password"})
 public class LoginFormDto {
 
-	String email;
+	String pseudo;
 	String password;
 }
