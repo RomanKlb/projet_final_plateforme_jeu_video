@@ -18,7 +18,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PlatformServiceTest {
+class PlatformServiceIT {
 
 	@Autowired
 	PlatformService platformService;

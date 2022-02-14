@@ -4,7 +4,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
