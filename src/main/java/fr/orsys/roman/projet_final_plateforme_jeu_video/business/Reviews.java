@@ -20,7 +20,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString(of = {"id","description","sendingDate","rating","moderatorDate","gamer","moderator","game" })
+@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Reviews {
@@ -34,7 +34,7 @@ public class Reviews {
 	
 	private LocalDateTime sendingDate;
 	
-	@Range(min = 0, max = 5, message = "La notation est compris entre 0 et 5 étoiles")
+	@Range(min = 0, max = 20, message = "La notation est compris entre 0 et 20")
 	private Float rating;
 	
 	private LocalDateTime moderatorDate;
