@@ -54,4 +54,11 @@ public class InitController {
 		}
 	}
 	
+	private void initModo() {
+		
+	}
+	
+	private void initBusinessModel() {
+		
+	}
 }
