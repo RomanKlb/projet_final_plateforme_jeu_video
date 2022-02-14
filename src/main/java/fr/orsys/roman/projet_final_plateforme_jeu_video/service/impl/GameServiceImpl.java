@@ -1,10 +1,12 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.BusinessModelRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ClassificationRepository;
@@ -52,12 +54,21 @@ public class GameServiceImpl implements GameService {
 		game.setEditor(this.editorRepository.findByName(gameDto.getEditorName()));
 		game.setGenre(this.genreRepository.findByName(gameDto.getGenreName()));
 		game.setReviews(new ArrayList<>());
+		System.out.println("saveGame de GamService" + gameDto.getPlatformNames().get(0));
 		game.setPlatforms(this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()));
+		System.out.println("taille List getPlatformsFromNames " +this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()).size());
+		System.out.println("element " +this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()).get(0));
 		game.setName(gameDto.getName());
 		game.setDescription(gameDto.getDescription());
-		game.setImage(gameDto.getImage());
 		game.setReleaseDate(gameDto.getReleaseDate());
 		return this.gameRepository.save(game);
+	}
+	
+	@Override
+	public Game addPlatforms(Game game, List<Platform> platforms) {
+		List<Platform> gamePlatforms = game.getPlatforms();
+		gamePlatforms.addAll(platforms);
+		return  game;
 	}
 
 	

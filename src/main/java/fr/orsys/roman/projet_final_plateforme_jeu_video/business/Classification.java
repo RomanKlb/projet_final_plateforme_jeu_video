@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class Classification {
 	@NotBlank(message = "Le nom de la classification doit être complété")
 	private String name;
 	
+	@JsonIgnore
 	@ToString.Exclude
 	@OneToMany(mappedBy = "classification", fetch = FetchType.LAZY)
 	private List<Game> games;

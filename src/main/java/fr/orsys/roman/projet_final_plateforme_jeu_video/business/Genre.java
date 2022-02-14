@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class Genre {
 	@NotBlank(message = "Le name du genre doit être complété")
 	private String name;
 	
+	@JsonIgnore
 	@ToString.Exclude
 	@OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
 	private List<Game> games;

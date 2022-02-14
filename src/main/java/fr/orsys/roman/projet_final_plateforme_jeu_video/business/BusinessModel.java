@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +34,7 @@ public class BusinessModel {
 	@NotNull(message = "Le nom de la classification ne peut pas être vide")
 	@NotBlank(message = "Le nom de la classification doit être complété")
 	private String name;
-	
+	@JsonIgnore
 	@ToString.Exclude
 	@OneToMany(mappedBy = "businessModel", fetch = FetchType.LAZY)
 	private List<Game> games;

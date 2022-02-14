@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,8 @@ public class GameDto {
 	String name;
     @NotBlank(message = "La description doit être complétée")
 	String description;
+    @Past(message = "La date de sortie doit être dans le passée")
 	LocalDate releaseDate;
-	String image;
 	@NotNull(message = "La classification doit être mentionnée")
 	String classificationName;
 	@NotNull(message = "Le genre doit être mentionné")
