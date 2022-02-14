@@ -5,24 +5,28 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl.ClassificationServiceImpl;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl.PlatformServiceImpl;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
 
 @Controller
 public class InitController {
 	
-	private ClassificationServiceImpl classificationService;
-	private PlatformServiceImpl platformService;
+	private final ClassificationService classificationService;
+	private final PlatformService platformService;
+	private final GenreService genreService;
 
-	public InitController(ClassificationServiceImpl classificationService, PlatformServiceImpl platformService) {
+	public InitController(ClassificationService classificationService, PlatformService platformService, GenreService genreService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
+		this.genreService = genreService;
 	}
 	
 	@PostConstruct
 	private void init() {
 		initClassifications();
 		initPlatforms();
+		initGenres();
 	}
 	
 	private void initClassifications() {
@@ -44,6 +48,14 @@ public class InitController {
 		/*if(platformService.getPlatforms().size() < 1) {
 			
 		}*/
+	}
+	
+	private void initGenres() {
+		if (genreService.count()==0) {
+		    this.genreService.addGenre("Sandbox");
+		    this.genreService.addGenre("Action");
+		    this.genreService.addGenre("Adventure");
+		}
 	}
 	
 }
