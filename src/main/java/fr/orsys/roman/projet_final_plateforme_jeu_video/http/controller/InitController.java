@@ -31,8 +31,12 @@ public class InitController {
 	private final EditorService editorService;
 	private final GameService gameService;
 
+	
+
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService, GameService gameService) {
+			GenreService genreService, BusinessModelService businessModelService, ModeratorService moderatorService,
+			EditorService editorService, GameService gameService) {
+		super();
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
