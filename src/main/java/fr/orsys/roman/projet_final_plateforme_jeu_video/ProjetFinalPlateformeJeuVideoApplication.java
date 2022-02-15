@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
-//@EnableSwagger2
 public class ProjetFinalPlateformeJeuVideoApplication {
 
 	public static void main(String[] args) {
