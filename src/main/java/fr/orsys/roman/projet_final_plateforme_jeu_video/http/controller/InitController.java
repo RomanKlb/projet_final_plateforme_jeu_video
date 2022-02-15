@@ -1,14 +1,21 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
@@ -22,15 +29,17 @@ public class InitController {
 	private final BusinessModelService businessModelService;
 	private final ModeratorService moderatorService;
 	private final EditorService editorService;
+	private final GameService gameService;
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService) {
+			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService, GameService gameService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
 		this.businessModelService = businessModelService;
 		this.moderatorService = moderatorService;
 		this.editorService = editorService;
+		this.gameService = gameService;
 	}
 
 	@PostConstruct
@@ -41,6 +50,7 @@ public class InitController {
 		initBusinessModel();
 		initModerator();
 		initEditors();
+		initGames();
 	}
 
 	private void initModerator() throws ModeratorAlreadyExistInDbException {
@@ -78,6 +88,7 @@ public class InitController {
 
 	private void initPlatforms() {
 		if (platformService.getPlatforms().size() < 1) {
+			platformService.createPlatform("PC");
 			platformService.createPlatform("PlayStation");
 			platformService.createPlatform("PlayStation 2");
 			platformService.createPlatform("PlayStation 3");
@@ -88,7 +99,8 @@ public class InitController {
 			platformService.createPlatform("Xbox One");
 			platformService.createPlatform("Xbox Series S");
 			platformService.createPlatform("Xbox Series X");
-			platformService.createPlatform("PC");
+			platformService.createPlatform("Wii U");
+			platformService.createPlatform("Nintendo Switch");
 		}
 	}
 
@@ -97,13 +109,17 @@ public class InitController {
 			genreService.addGenre("Sandbox");
 			genreService.addGenre("Action");
 			genreService.addGenre("Adventure");
+			genreService.addGenre("FPS");
+			genreService.addGenre("MMORPG");
+			genreService.addGenre("TPS");
+			genreService.addGenre("RPG");
 		}
 	}
 
 	private void initBusinessModel() {
 		if(businessModelService.getAll().size() < 1) {
-			businessModelService.createModel("free to play");
-			businessModelService.createModel("pay to play");
+			businessModelService.createModel("Free to play");
+			businessModelService.createModel("Vente");
 		}
 	}
 	
@@ -114,6 +130,113 @@ public class InitController {
 			editorService.createEditor("Ubisoft");
 			editorService.createEditor("Square Enix");
 			editorService.createEditor("10 Chambers");
+			editorService.createEditor("Battlestate Games");
+			editorService.createEditor("Nintendo");
+		}
+	}
+	
+	private void initGames() {
+		if(gameService.getAll().size() < 1) {
+			CreateGameDto gtfo = new CreateGameDto();
+			List<Long> platforms = new ArrayList<>(Arrays.asList(1L));
+			gtfo.setName("GTFO");
+			gtfo.setDescription("Work together or Die together");
+			gtfo.setReleaseDate(LocalDate.of(2021, 12, 9));
+			gtfo.setClassificationId(3L);
+			gtfo.setBusinessModelId(2L);
+			gtfo.setGenreId(4L);
+			gtfo.setPlatformIds(platforms);
+			gtfo.setEditorId(5L);
+			gameService.saveGame(gtfo);
+			
+			CreateGameDto dto = new CreateGameDto();
+			platforms = new ArrayList<>(Arrays.asList(1L));
+			dto.setName("Escape from Tarkov");
+			dto.setDescription("Escape from Tarkov est un jeu vidéo de tir tactique à la première personne créé par le studio russe Battlestate Games. Le jeu est sorti en version alpha fermée le 4 août 2016. En juin 2017, le jeu passe en bêta. Le jeu est actuellement toujours en Bêta.");
+			dto.setReleaseDate(LocalDate.of(2016, 8, 4));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(4L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(6L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(12L, 13L));
+			dto.setName("The Legend of Zelda: Breath of the Wild");
+			dto.setDescription("The Legend of Zelda: Breath of the Wild est un jeu d'action-aventure développé par la division Nintendo EPD, assisté par Monolith Soft, et publié par Nintendo le 3 mars 2017 sur Nintendo Switch lors du lancement de la console, ainsi que sur Wii U dont il est le dernier jeu produit par Nintendo");
+			dto.setReleaseDate(LocalDate.of(2017, 3, 3));
+			dto.setClassificationId(3L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(7L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(7L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 9L));
+			dto.setName("For Honor");
+			dto.setDescription("For Honor est un jeu vidéo mêlant combat et beat them all développé par Ubisoft Montréal et édité par Ubisoft sur PlayStation 4, Xbox One et Microsoft Windows, disponible depuis le 14 février 2017");
+			dto.setReleaseDate(LocalDate.of(2017, 2, 14));
+			dto.setClassificationId(4L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(2L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 9L));
+			dto.setName("Tom Clancy's The Division 2");
+			dto.setDescription("Tom Clancy’s The Division 2 est un jeu vidéo en ligne en monde ouvert de tir tactique et d'action-RPG développé par Massive Entertainment et édité par Ubisoft, sorti le 15 mars 2019 sur PlayStation 4, Xbox One et Windows. Il fait suite à Tom Clancy's The Division");
+			dto.setReleaseDate(LocalDate.of(2019, 2, 7));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(6L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 9L));
+			dto.setName("Watch Dogs");
+			dto.setDescription("Watch Dogs est un jeu vidéo d'action-aventure et d'infiltration développé par les studios Ubisoft Montréal et Ubisoft Reflections. Il est annoncé par Ubisoft lors de sa conférence à l'E3 2012");
+			dto.setReleaseDate(LocalDate.of(2014, 5, 27));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(6L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			dto.setName("Assassin's Creed Valhalla");
+			dto.setDescription("Assassin's Creed Valhalla est un jeu vidéo d'action-aventure et de rôle, développé par Ubisoft Montréal et édité par Ubisoft, sorti en novembre 2020 sur Microsoft Windows, PlayStation 4, Xbox One, Xbox Series, Google Stadia et PlayStation 5");
+			dto.setReleaseDate(LocalDate.of(2020, 11, 10));
+			dto.setClassificationId(4L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(3L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 9L));
+			dto.setName("Far Cry 5");
+			dto.setDescription("Far Cry 5 est un jeu vidéo de tir à la première personne, d'action-aventure édité par Ubisoft et développé conjointement par les studios Ubisoft Montréal et Ubisoft Toronto. Après un premier teaser le 22 mai 2017, il est annoncé officiellement le 26 mai 2017, et sa sortie a lieu le 27 mars 2018.");
+			dto.setReleaseDate(LocalDate.of(2018, 3, 26));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(4L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			dto.setName("Tom Clancy's Rainbow Six: Extraction");
+			dto.setDescription("Tom Clancy's Rainbow Six: Extraction est un jeu vidéo survival horror en coopération de un à trois joueurs, développé par Ubisoft Montréal et édité par Ubisoft, sorti le 20 janvier 2022 sur PlayStation 4, Xbox One, Amazon Luna, Stadia, Windows, PlayStation 5 et Xbox Series");
+			dto.setReleaseDate(LocalDate.of(2018, 3, 26));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(4L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
 		}
 	}
 }

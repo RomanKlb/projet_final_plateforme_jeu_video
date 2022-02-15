@@ -10,6 +10,7 @@ public interface ClassificationService {
 	
 	List<Classification> getClassifications();
 	Classification getClassificationById(Long id);
+	Classification getClassificationByName(String name);
 	
 	boolean deleteClassification(Long id);
 }

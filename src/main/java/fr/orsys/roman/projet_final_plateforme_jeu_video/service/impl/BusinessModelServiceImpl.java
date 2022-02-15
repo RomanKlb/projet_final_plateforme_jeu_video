@@ -34,6 +34,11 @@ public class BusinessModelServiceImpl implements BusinessModelService {
 	public BusinessModel getById(Long id) {
 		return businessModelRepository.findById(id).orElse(null);
 	}
+	
+	@Override
+	public BusinessModel getByName(String name) {
+		return businessModelRepository.findByName(name);
+	}
 
 	@Override
 	public boolean deleteById(Long id) {

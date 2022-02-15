@@ -74,12 +74,14 @@ public class GameServiceImpl implements GameService {
 	}
 	
 	@Override
-	public Game findOneGame(Long id) {
-		return gameRepository.findById(id).orElseThrow();
-	}
-	
 	public List<Game> getAll() {
 		return gameRepository.findAll();
+	}
+
+	@Override
+<<<<<<< HEAD
+	public Game findOneGame(Long id) {
+		return gameRepository.findById(id).orElseThrow();
 	}
 
 	@Override
@@ -92,8 +94,7 @@ public class GameServiceImpl implements GameService {
 		}
 	}
 
-
-	@Override
+=======
 	public Game getById(Long id) {
 		return gameRepository.findById(id).orElse(null);
 	}
@@ -112,6 +113,7 @@ public class GameServiceImpl implements GameService {
 		game.setPlatforms(platforms);
 		return game;
 	}
+>>>>>>> main
 	
 	private Game setPlatformsByName(Game game, List<String> list) {
 		List<Platform> platforms = new ArrayList<>();

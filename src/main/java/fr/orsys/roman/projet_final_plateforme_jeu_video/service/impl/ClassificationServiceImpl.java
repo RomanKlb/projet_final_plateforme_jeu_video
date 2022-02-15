@@ -31,6 +31,11 @@ public class ClassificationServiceImpl implements ClassificationService {
 	public Classification getClassificationById(Long id) {
 		return classificationRepository.findById(id).orElse(null);
 	}
+	
+	@Override
+	public Classification getClassificationByName(String name) {
+		return classificationRepository.findByName(name);
+	}
 
 	@Override
 	public boolean deleteClassification(Long id) {

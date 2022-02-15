@@ -10,6 +10,7 @@ public interface EditorService {
 	
 	List<Editor> getEditors();
 	Editor getEditorById(Long id);
+	Editor getEditorByName(String name);
 	
 	boolean deleteEditorById(Long id);
 	
