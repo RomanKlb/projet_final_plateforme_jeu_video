@@ -1,5 +1,7 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class ModeratorServiceImpl implements ModeratorService{
 
 	
 	@Override
-	public Moderator saveUserModerator(@Valid UserModeratorDto moderatorDto) throws ModeratorAlreadyExistInDbException {
+	public Moderator createUserModerator(@Valid UserModeratorDto moderatorDto) throws ModeratorAlreadyExistInDbException {
 		log.info("Service saveUserModerator");
 		if(moderatorRepository.existsByEmail(moderatorDto.getEmail())) {
 			throw new ModeratorAlreadyExistInDbException();
@@ -51,6 +53,12 @@ public class ModeratorServiceImpl implements ModeratorService{
 		Moderator moderator = moderatorRepository.findById(id).orElseThrow();
 		moderator.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
 		return moderator;
+	}
+
+
+	@Override
+	public List<Moderator> findAll() {
+		return moderatorRepository.findAll();
 	}
 
 }

@@ -9,12 +9,14 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
 
 @Controller
@@ -24,29 +26,55 @@ public class InitController {
 	private final PlatformService platformService;
 	private final GenreService genreService;
 	private final BusinessModelService businessModelService;
+	private final ModeratorService moderatorService;
 	private final EditorService editorService;
 	private final GameService gameService;
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, GameService gameService) {
+			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
 		this.businessModelService = businessModelService;
+		this.moderatorService = moderatorService;
 		this.editorService = editorService;
 		this.gameService = gameService;
 	}
 
 	@PostConstruct
-	private void init() {
+	private void init() throws ModeratorAlreadyExistInDbException {
 		initClassifications();
 		initPlatforms();
 		initGenres();
 		initBusinessModel();
+		initModerator();
 		initEditors();
 		initGames();
 	}
 
+	private void initModerator() throws ModeratorAlreadyExistInDbException {
+		if(moderatorService.findAll().size() < 1) {
+			UserModeratorDto moderator1 = new UserModeratorDto();
+			moderator1.setEmail("alaric@gmail.com");
+			moderator1.setPassword("azerty");
+			moderator1.setPseudo("alaric");
+			moderator1.setPhoneNumber("0123456789");
+			moderatorService.createUserModerator(moderator1);
+			UserModeratorDto moderator2 = new UserModeratorDto();
+			moderator2.setEmail("roman@gmail.com");
+			moderator2.setPassword("azerty");
+			moderator2.setPseudo("roman");
+			moderator2.setPhoneNumber("0123456789");
+			moderatorService.createUserModerator(moderator2);
+			UserModeratorDto moderator3 = new UserModeratorDto();
+			moderator3.setEmail("moulaye@gmail.com");
+			moderator3.setPassword("azerty");
+			moderator3.setPseudo("moulaye");
+			moderator3.setPhoneNumber("0123456789");
+			moderatorService.createUserModerator(moderator3);
+		}
+	}
+	
 	private void initClassifications() {
 		if (classificationService.getClassifications().size() < 1) {
 			classificationService.createClassification("PEGI 3");
