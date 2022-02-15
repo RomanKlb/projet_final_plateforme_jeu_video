@@ -74,28 +74,13 @@ public class GameServiceImpl implements GameService {
 	}
 	
 	@Override
-	public Game findOneGame(Long id) {
+	public Game getById(Long id) {
 		return gameRepository.findById(id).orElseThrow();
 	}
 	
+	@Override
 	public List<Game> getAll() {
 		return gameRepository.findAll();
-	}
-
-	@Override
-	public boolean deleteOneGame(Long id) {
-		if(gameRepository.existsById(id)) {
-			gameRepository.deleteById(id);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
-	@Override
-	public Game getById(Long id) {
-		return gameRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -121,4 +106,5 @@ public class GameServiceImpl implements GameService {
 		game.setPlatforms(platforms);
 		return game;
 	}
+
 }
