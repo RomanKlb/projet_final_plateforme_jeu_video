@@ -1,5 +1,16 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service;
 
-public interface EditorService {
+import java.util.List;
 
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Editor;
+
+public interface EditorService {
+	
+	Editor createEditor(String name);
+	
+	List<Editor> getEditors();
+	Editor getEditorById(Long id);
+	
+	boolean deleteEditorById(Long id);
+	
 }
