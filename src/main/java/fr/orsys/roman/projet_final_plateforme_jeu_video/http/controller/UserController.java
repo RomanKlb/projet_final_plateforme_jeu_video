@@ -77,7 +77,7 @@ public class UserController {
 			log.info("controller bindinresult addModerator");
 			return null;
 		} else {
-			return moderatorService.saveUserModerator(moderatorDto);
+			return moderatorService.createUserModerator(moderatorDto);
 		}
 	}
 	
