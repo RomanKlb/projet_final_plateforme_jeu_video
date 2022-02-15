@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +32,6 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
  *
  */
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(path="/game") 
 public class GameController {
 	private final GameService gameService;
@@ -63,5 +65,17 @@ public class GameController {
 	//@ResponseStatus(code = HttpStatus.)
 	public String traiterDateIsInTheFuturException() {
 		return "La date de sortie ne peut être dans le futur";
+	}
+	
+	@GetMapping("{id}")
+	public Game findOneGame(@PathVariable Long id) {
+		log.info("controller findOneGame");
+		return gameService.findOneGame(id);
+	}
+	
+	@DeleteMapping("{id}/delete")
+	public boolean deleteOneGame(@PathVariable Long id) {
+		log.info("controller deleteOneGame");
+		return gameService.deleteOneGame(id);
 	}
 }

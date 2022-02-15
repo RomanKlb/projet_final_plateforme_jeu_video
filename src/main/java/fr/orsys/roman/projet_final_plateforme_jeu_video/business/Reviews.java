@@ -7,13 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,13 +22,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
 public class Reviews {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "La description doit être complété")
 	@Length(max = 5000, message = "La description est maximum de 5000 caractères")
 	private String description;
 	
@@ -39,34 +39,32 @@ public class Reviews {
 	
 	private LocalDateTime moderatorDate;
 	
+	@NotBlank(message = "Le joueur doit être complété")
 	@ManyToOne
 	private Gamer gamer;
 	
 	@ManyToOne
 	private Moderator moderator;
 	
+	@NotBlank(message = "Le jeu doit être complété")
 	@ManyToOne
 	private Game game;
+	
+	public Reviews() {
+		sendingDate = LocalDateTime.now();
+	}
 
 	public Reviews(@Length(max = 5000, message = "La description est maximum de 5000 caractères") String description,
-			LocalDateTime sendingDate,
-			@Range(min = 0, max = 5, message = "La notation est compris entre 0 et 5 étoiles") Float rating,
-			Gamer gamer, Game game) {
-		super();
+			@Range(min = 0, max = 20, message = "La notation est compris entre 0 et 20") Float rating, Gamer gamer,
+			Moderator moderator, Game game) {
+		this();
 		this.description = description;
-		this.sendingDate = sendingDate;
 		this.rating = rating;
 		this.gamer = gamer;
+		this.moderator = moderator;
 		this.game = game;
 	}
 
-	
-	
-	
 
-	
-	
-	
-	
 	
 }

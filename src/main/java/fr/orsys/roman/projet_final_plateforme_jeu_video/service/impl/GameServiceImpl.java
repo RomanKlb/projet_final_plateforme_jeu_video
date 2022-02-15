@@ -71,5 +71,20 @@ public class GameServiceImpl implements GameService {
 		return  game;
 	}
 
+	@Override
+	public Game findOneGame(Long id) {
+		return gameRepository.findById(id).orElseThrow();
+	}
+
+	@Override
+	public boolean deleteOneGame(Long id) {
+		if(gameRepository.existsById(id)) {
+			gameRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	
 }

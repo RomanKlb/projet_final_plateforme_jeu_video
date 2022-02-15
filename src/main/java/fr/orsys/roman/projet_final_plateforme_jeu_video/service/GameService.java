@@ -17,5 +17,7 @@ public interface GameService {
 	 * @return game
 	 */
 	Game addPlatforms(Game game, List<Platform> platforms);
+	Game findOneGame(Long id);
+	boolean deleteOneGame(Long id);
 
 }
