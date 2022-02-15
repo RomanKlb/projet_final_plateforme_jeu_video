@@ -39,12 +39,14 @@ public class ConnexionServiceImpl implements ConnexionService {
 	public ResponseEntity<UserResponse> getAuthenticateUser(LoginFormDto loginFormDto) throws UserNotFoundException {
 		log.info("Service getAuthenticateUser");
 
+		System.out.println(loginFormDto.toString());
 		UserResponse userResponse = new UserResponse();
 
 		if(moderatorRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Moderator> moderator = moderatorRepository.findByPseudo(loginFormDto.getPseudo());
-			if(moderator.isPresent()) {
-
+			if(!moderator.isPresent()) {
+				throw new UserNotFoundException();
+			} else {
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), moderator.get().getPassword())) 
 					return ResponseEntity.badRequest().build();
 
@@ -54,10 +56,14 @@ public class ConnexionServiceImpl implements ConnexionService {
 				userResponse.setPassword(moderator.get().getPassword());
 				userResponse.setAdmin(true);
 				userResponse.setPhoneNumber(moderator.get().getPhoneNumber());
+				return ResponseEntity.ok(userResponse);	
 			}
+			
 		} else if(gamerRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Gamer> gamer = gamerRepository.findByPseudo(loginFormDto.getPseudo());
-			if(gamer.isPresent()) {
+			if(!gamer.isPresent()) {
+				throw new UserNotFoundException();
+			} else {
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), gamer.get().getPassword())) 
 					return ResponseEntity.badRequest().build();
 
@@ -67,12 +73,13 @@ public class ConnexionServiceImpl implements ConnexionService {
 				userResponse.setPassword(gamer.get().getPassword());
 				userResponse.setAdmin(false);
 				userResponse.setBirthDate(gamer.get().getBirthDate());
+				return ResponseEntity.ok(userResponse);	
 			}
-		} else {
-			throw new UserNotFoundException();
+		}
+		else {
+			return ResponseEntity.notFound().build();
 		}
 
-		return ResponseEntity.ok(userResponse);	
 
 	}
 }

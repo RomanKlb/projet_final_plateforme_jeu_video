@@ -55,7 +55,6 @@ public class GameServiceImpl implements GameService {
 		game.setPlatforms(this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()));
 		game.setName(gameDto.getName());
 		game.setDescription(gameDto.getDescription());
-		game.setImage(gameDto.getImage());
 		game.setReleaseDate(gameDto.getReleaseDate());
 		return this.gameRepository.save(game);
 	}

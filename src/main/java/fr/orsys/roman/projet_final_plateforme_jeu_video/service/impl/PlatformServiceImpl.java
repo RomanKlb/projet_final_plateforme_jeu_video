@@ -18,16 +18,6 @@ public class PlatformServiceImpl implements PlatformService {
 		this.platformRepository = platformRepository;
 	}
 
-	private  final PlatformRepository platformRepository;
-	
-	
-	/**
-	 * @param platformRepository
-	 */
-	public PlatformServiceImpl(PlatformRepository platformRepository) {
-		this.platformRepository = platformRepository;
-	}
-
 	@Override
 	public Platform createPlatform(String name) {
 		return platformRepository.save(new Platform(name));

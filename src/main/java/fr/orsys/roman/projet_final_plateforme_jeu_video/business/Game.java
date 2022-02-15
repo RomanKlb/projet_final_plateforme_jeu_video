@@ -59,11 +59,10 @@ public class Game {
     @ManyToOne
     private Editor editor;
 
-    /*@ManyToOne
-    private Platform platform;
-*/
+    @ToString.Exclude
     @ManyToMany
     private List<Platform> platforms;
+    
     @ManyToOne
     private BusinessModel businessModel;
 
@@ -71,7 +70,7 @@ public class Game {
             @NotNull(message = "Le nom du jeu ne peut pas être vide") @NotBlank(message = "Le nom du jeu doit être complété") String name,
             @Length(max = 10000, message = "La description est maximum de 10000 caractères") String description,
             LocalDate releaseDate, String image, List<Reviews> reviews, Classification classification, Genre genre,
-            Editor editor, Platform platform, BusinessModel businessModel) {
+            Editor editor, List<Platform> platforms, BusinessModel businessModel) {
         super();
         this.name = name;
         this.description = description;

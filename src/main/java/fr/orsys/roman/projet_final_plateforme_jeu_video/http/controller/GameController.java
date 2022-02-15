@@ -39,7 +39,6 @@ public class GameController {
 	@PostMapping("/save")
 	public Game addGame(@Valid @RequestBody Game game, BindingResult result) {
 		log.info(game.toString());
-		System.out.println(game);
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {

@@ -18,7 +18,6 @@ public class GameDto {
 	String name;
 	String description;
 	LocalDate releaseDate;
-	String image;
 	String classificationName;
 	String genreName;
 	String editorName;
