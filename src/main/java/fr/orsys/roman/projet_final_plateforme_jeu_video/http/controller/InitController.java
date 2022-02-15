@@ -24,7 +24,7 @@ public class InitController {
 	private final EditorService editorService;
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService modaratorService) {
+			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
