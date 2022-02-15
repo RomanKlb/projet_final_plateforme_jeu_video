@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +37,7 @@ public class Platform {
 	//@ToString.Exclude
 	/*@OneToMany(mappedBy = "platform", fetch = FetchType.LAZY)
 	private List<Game> games;*/
+	@JsonIgnore
 	@ToString.Exclude
 	@ManyToMany(mappedBy = "platforms")
 	private List<Game> games;

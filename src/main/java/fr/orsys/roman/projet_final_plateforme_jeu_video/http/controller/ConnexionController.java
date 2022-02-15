@@ -15,7 +15,6 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.UserN
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ConnexionService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(path="/login")
 public class ConnexionController {
 

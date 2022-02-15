@@ -25,7 +25,6 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(path="/user")
 public class UserController {
 
