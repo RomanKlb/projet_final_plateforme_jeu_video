@@ -8,6 +8,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModerat
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
@@ -20,14 +21,16 @@ public class InitController {
 	private final GenreService genreService;
 	private final BusinessModelService businessModelService;
 	private final ModeratorService moderatorService;
+	private final EditorService editorService;
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, ModeratorService moderatorService) {
+			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService modaratorService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
 		this.businessModelService = businessModelService;
 		this.moderatorService = moderatorService;
+		this.editorService = editorService;
 	}
 
 	@PostConstruct
@@ -37,6 +40,7 @@ public class InitController {
 		initGenres();
 		initBusinessModel();
 		initModerator();
+		initEditors();
 	}
 
 	private void initModerator() throws ModeratorAlreadyExistInDbException {
@@ -76,7 +80,15 @@ public class InitController {
 		if (platformService.getPlatforms().size() < 1) {
 			platformService.createPlatform("PlayStation");
 			platformService.createPlatform("PlayStation 2");
+			platformService.createPlatform("PlayStation 3");
+			platformService.createPlatform("PlayStation 4");
+			platformService.createPlatform("PlayStation 5");
 			platformService.createPlatform("Xbox");
+			platformService.createPlatform("Xbox 360");
+			platformService.createPlatform("Xbox One");
+			platformService.createPlatform("Xbox Series S");
+			platformService.createPlatform("Xbox Series X");
+			platformService.createPlatform("PC");
 		}
 	}
 
@@ -92,6 +104,16 @@ public class InitController {
 		if(businessModelService.getAll().size() < 1) {
 			businessModelService.createModel("free to play");
 			businessModelService.createModel("pay to play");
+		}
+	}
+	
+	private void initEditors() {
+		if(editorService.getEditors().size() < 1) {
+			editorService.createEditor("Electronic Arts");
+			editorService.createEditor("Activision");
+			editorService.createEditor("Ubisoft");
+			editorService.createEditor("Square Enix");
+			editorService.createEditor("10 Chambers");
 		}
 	}
 }
