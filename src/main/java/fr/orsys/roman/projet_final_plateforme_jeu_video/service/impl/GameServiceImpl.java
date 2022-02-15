@@ -7,37 +7,36 @@ import org.springframework.stereotype.Service;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.BusinessModelRepository;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ClassificationRepository;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.EditorRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GameRepository;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GenreRepository;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.PlatformRepository;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
 @Service
 public class GameServiceImpl implements GameService {
 	
 	private final GameRepository gameRepository;
-	private final PlatformRepository platformRepository;
-	private final BusinessModelRepository businessModelRepository;
-	private final ClassificationRepository classificationRepository;
-	private final GenreRepository genreRepository;
-	private final EditorRepository editorRepository;
-	private final PlatformService platfomrService;
+	private final PlatformService platformService;
+	private final BusinessModelService businessModelService;
+	private final ClassificationService classificationService;
+	private final GenreService genreService;
+	private final EditorService editorService;
 	
 	/**
 	 * @param gameRepository
 	 */
-	public GameServiceImpl(GameRepository gameRepository, PlatformRepository platformRepository, GenreRepository genreRepository, EditorRepository editorRepository, ClassificationRepository classificationRepository, BusinessModelRepository businessModelRepository, PlatformService platfomrService) {
+	public GameServiceImpl(PlatformService platformService, GenreService genreService, GameRepository gameRepository, EditorService editorService, ClassificationService classificationService, BusinessModelService businessModelService) {
 		this.gameRepository = gameRepository;
-		this.platformRepository = platformRepository;
-		this.businessModelRepository = businessModelRepository;
-		this.classificationRepository = classificationRepository;
-		this.genreRepository = genreRepository;
-		this.editorRepository = editorRepository;
-		this.platfomrService = platfomrService;
+		this.platformService = platformService;
+		this.businessModelService = businessModelService;
+		this.classificationService = classificationService;
+		this.genreService = genreService;
+		this.editorService = editorService;
+
 	}
 
 	/*@Override
@@ -49,27 +48,62 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public Game saveGame(GameDto gameDto) {
 		Game game = new Game();
-		game.setBusinessModel(this.businessModelRepository.findByName(gameDto.getBusinessModelName()));
-		game.setClassification(this.classificationRepository.findByName(gameDto.getClassificationName()));
-		game.setEditor(this.editorRepository.findByName(gameDto.getEditorName()));
-		game.setGenre(this.genreRepository.findByName(gameDto.getGenreName()));
-		game.setReviews(new ArrayList<>());
-		System.out.println("saveGame de GamService" + gameDto.getPlatformNames().get(0));
-		game.setPlatforms(this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()));
-		System.out.println("taille List getPlatformsFromNames " +this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()).size());
-		System.out.println("element " +this.platfomrService.getPlatormsByNames(gameDto.getPlatformNames()).get(0));
+		game.setBusinessModel(businessModelService.getByName(gameDto.getBusinessModelName()));
+		game.setClassification(classificationService.getClassificationByName(gameDto.getClassificationName()));
+		game.setEditor(editorService.getEditorByName(gameDto.getEditorName()));
+		game.setGenre(genreService.getGenreByName(gameDto.getGenreName()));
 		game.setName(gameDto.getName());
 		game.setDescription(gameDto.getDescription());
 		game.setReleaseDate(gameDto.getReleaseDate());
-		return this.gameRepository.save(game);
+		game = setPlatformsByName(game, gameDto.getPlatformNames());
+		return gameRepository.save(game);
 	}
 	
 	@Override
-	public Game addPlatforms(Game game, List<Platform> platforms) {
-		List<Platform> gamePlatforms = game.getPlatforms();
-		gamePlatforms.addAll(platforms);
-		return  game;
+	public Game saveGame(CreateGameDto dto) {
+		Game game = new Game();
+		game.setName(dto.getName());
+		game.setDescription(dto.getDescription());
+		game.setReleaseDate(dto.getReleaseDate());
+		game.setClassification(classificationService.getClassificationById(dto.getClassificationId()));
+		game.setGenre(genreService.getGenreById(dto.getGenreId()));
+		game.setEditor(editorService.getEditorById(dto.getEditorId()));
+		game.setBusinessModel(businessModelService.getById(dto.getBusinessModelId()));
+		game = setPlatformsById(game, dto.getPlatformIds());
+		return gameRepository.save(game);
+	}
+	
+	@Override
+	public List<Game> getAll() {
+		return gameRepository.findAll();
 	}
 
+	@Override
+	public Game getById(Long id) {
+		return gameRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	public boolean deleteById(Long id) {
+		gameRepository.deleteById(id);
+		return !gameRepository.existsById(id);
+	}
+
+	private Game setPlatformsById(Game game, List<Long> list) {
+		List<Platform> platforms = new ArrayList<>();
+		for(Long e: list) {
+			platforms.add(platformService.getPlatformById(e));
+		}
+		game.setPlatforms(platforms);
+		return game;
+	}
 	
+	private Game setPlatformsByName(Game game, List<String> list) {
+		List<Platform> platforms = new ArrayList<>();
+		for(String e: list) {
+			platforms.add(platformService.getPlatformByName(e));
+		}
+		game.setPlatforms(platforms);
+		return game;
+	}
 }

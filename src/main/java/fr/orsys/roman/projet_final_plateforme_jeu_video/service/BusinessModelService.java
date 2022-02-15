@@ -10,6 +10,7 @@ public interface BusinessModelService {
 	
 	List<BusinessModel> getAll();
 	BusinessModel getById(Long id);
+	BusinessModel getByName(String name);
 	
 	boolean deleteById(Long id);
 	

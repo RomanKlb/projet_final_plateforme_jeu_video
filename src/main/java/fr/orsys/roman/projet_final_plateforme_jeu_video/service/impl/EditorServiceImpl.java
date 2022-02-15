@@ -35,6 +35,11 @@ public class EditorServiceImpl implements EditorService {
 	public Editor getEditorById(Long id) {
 		return editorRepository.findById(id).orElse(null);
 	}
+	
+	@Override
+	public Editor getEditorByName(String name) {
+		return editorRepository.findByName(name);
+	}
 
 	@Override
 	public boolean deleteEditorById(Long id) {

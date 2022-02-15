@@ -9,7 +9,7 @@ public interface PlatformService {
 	
 	List<Platform> getPlatforms();
 	Platform getPlatformById(Long id);
+	Platform getPlatformByName(String name);
 	
 	boolean deletePlatform(Long id);
-	List<Platform> getPlatormsByNames(List<String> platformNames);
 }
