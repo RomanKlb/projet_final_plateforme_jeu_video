@@ -11,14 +11,8 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
 
 @Service
 public class PlatformServiceImpl implements PlatformService {
-
-	private  final PlatformRepository platformRepository;
 	
 	private final PlatformRepository platformRepository;
-	
-	public PlatformServiceImpl(PlatformRepository platformRepository) {
-		this.platformRepository = platformRepository;
-	}
 	
 	/**
 	 * @param platformRepository
