@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
@@ -31,7 +32,7 @@ public class InitController {
 	private final GameService gameService;
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
-			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService) {
+			GenreService genreService, BusinessModelService businessModelService, EditorService editorService, ModeratorService moderatorService, GameService gameService) {
 		this.classificationService = classificationService;
 		this.platformService = platformService;
 		this.genreService = genreService;
