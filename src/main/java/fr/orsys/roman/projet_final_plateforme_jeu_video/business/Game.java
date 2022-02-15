@@ -59,9 +59,6 @@ public class Game {
     @ManyToOne
     private Editor editor;
 
-    /*@ManyToOne
-    private Platform platform;
-*/
     @ToString.Exclude
     @ManyToMany
     private List<Platform> platforms;
