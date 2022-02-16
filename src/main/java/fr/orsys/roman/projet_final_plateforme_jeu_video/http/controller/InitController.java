@@ -123,7 +123,7 @@ public class InitController {
 	private void initBusinessModel() {
 		if(businessModelService.getAll().size() < 1) {
 			businessModelService.createModel("Free to play");
-			businessModelService.createModel("Vente");
+			businessModelService.createModel("Pay to play");
 		}
 	}
 	
