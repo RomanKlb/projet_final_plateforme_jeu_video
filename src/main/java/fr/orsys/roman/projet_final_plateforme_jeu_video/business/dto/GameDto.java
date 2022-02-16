@@ -19,12 +19,20 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 public class GameDto {
-	String name;
-	String description;
-	LocalDate releaseDate;
-	String classificationName;
-	String genreName;
-	String editorName;
-	List<String> platformNames;
-	String businessModelName;
+	 @NotBlank(message = "Le nom du jeu doit être complété")
+		String name;
+	    @NotBlank(message = "La description doit être complétée")
+		String description;
+	    @Past(message = "La date de sortie doit être dans le passée")
+		LocalDate releaseDate;
+		@NotNull(message = "La classification doit être mentionnée")
+		String classificationName;
+		@NotNull(message = "Le genre doit être mentionné")
+		String genreName;
+		@NotNull(message = "L'editeur doit être mentionné")
+		String editorName;
+		@NotNull(message = "La ou les platefomrmes doit ou doivent être mentionnée")
+		List<String> platformNames;
+		@NotNull(message = "Le modèle économique doit être mentionné")
+		String businessModelName;
 }
