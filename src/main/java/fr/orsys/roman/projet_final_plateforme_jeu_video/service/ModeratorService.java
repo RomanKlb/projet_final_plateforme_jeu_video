@@ -19,4 +19,11 @@ public interface ModeratorService {
 
 	Moderator updatePasswordModerator(Long id, PasswordDto passwordDto);
 
+	boolean moderatorExist(Long id);
+
+	boolean existsbyPseudo(String pseudo);
+
+	boolean existsByEmail(String email);
+
+	boolean existsById(Long id);
 }

@@ -12,6 +12,10 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +29,13 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Gamer extends User{
 
+	@DateTimeFormat(iso = ISO.DATE)
 	@Past(message = "La date de naissance doit être dans le passé")
 	private LocalDate birthDate;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "gamer" , fetch = FetchType.LAZY)
-	private List<Reviews> avis;
+	private List<Reviews> reviews;
 
 
 	public Gamer(

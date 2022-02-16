@@ -1,10 +1,21 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = {"name"} )
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class CreateClassificationDto {
 
 	private String name;

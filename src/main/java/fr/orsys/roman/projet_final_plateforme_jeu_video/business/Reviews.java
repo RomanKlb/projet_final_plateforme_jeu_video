@@ -34,19 +34,18 @@ public class Reviews {
 	
 	private LocalDateTime sendingDate;
 	
+//	@NotBlank(message = "La note doit être complété")
 	@Range(min = 0, max = 20, message = "La notation est compris entre 0 et 20")
 	private Float rating;
 	
 	private LocalDateTime moderatorDate;
-	
-	@NotBlank(message = "Le joueur doit être complété")
+
 	@ManyToOne
 	private Gamer gamer;
 	
 	@ManyToOne
 	private Moderator moderator;
 	
-	@NotBlank(message = "Le jeu doit être complété")
 	@ManyToOne
 	private Game game;
 	

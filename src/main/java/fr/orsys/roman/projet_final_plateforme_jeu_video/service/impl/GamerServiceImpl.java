@@ -29,19 +29,12 @@ public class GamerServiceImpl implements GamerService{
 		this.gamerRepository = gamerRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
-
-
-
+	
 	@Override
 	public Gamer saveUserGamer(@Valid UserGamerDto gamerDto) throws GamerAlreadyExistInDbException {
 		log.info("Service saveUserGamer");
-		if(gamerRepository.existsByEmail(gamerDto.getEmail())) {
-			throw new GamerAlreadyExistInDbException();
-		}
 		return gamerRepository.save(new Gamer(gamerDto.getPseudo(), passwordEncoder.encode(gamerDto.getPassword()),gamerDto.getEmail(), gamerDto.getBirthDate()));
 	}
-
-
 
 	@Override
 	public Gamer findByIdGamer(Long id) {
@@ -49,13 +42,21 @@ public class GamerServiceImpl implements GamerService{
 		return gamerRepository.findById(id).orElseThrow();
 	}
 
-
-
 	@Override
 	public Gamer updatePasswordGamer(Long id, PasswordDto passwordDto) {
 		Gamer gamer = gamerRepository.findById(id).orElseThrow();
 		gamer.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
 		return gamer;
+	}
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return gamerRepository.existsByEmail(email);
+	}
+
+	@Override
+	public boolean existsbyPseudo(String pseudo) {
+		return gamerRepository.existsByPseudo(pseudo);
 	}
 	
 	

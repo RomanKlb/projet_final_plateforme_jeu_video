@@ -2,6 +2,8 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class ConnexionServiceImpl implements ConnexionService {
 	}
 
 
-	public ResponseEntity<UserResponse> getAuthenticateUser(LoginFormDto loginFormDto) throws UserNotFoundException {
+	public ResponseEntity<UserResponse> getAuthenticateUser(@Valid LoginFormDto loginFormDto) throws UserNotFoundException {
 		log.info("Service getAuthenticateUser");
 
 		System.out.println(loginFormDto.toString());
@@ -45,7 +47,7 @@ public class ConnexionServiceImpl implements ConnexionService {
 		if(moderatorRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Moderator> moderator = moderatorRepository.findByPseudo(loginFormDto.getPseudo());
 			if(!moderator.isPresent()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("moderator not found");
 			} else {
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), moderator.get().getPassword())) 
 					return ResponseEntity.badRequest().build();
@@ -62,7 +64,7 @@ public class ConnexionServiceImpl implements ConnexionService {
 		} else if(gamerRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Gamer> gamer = gamerRepository.findByPseudo(loginFormDto.getPseudo());
 			if(!gamer.isPresent()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("gamer not found");
 			} else {
 				if(!passwordEncoder.matches(loginFormDto.getPassword(), gamer.get().getPassword())) 
 					return ResponseEntity.badRequest().build();

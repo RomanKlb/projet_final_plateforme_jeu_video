@@ -1,6 +1,14 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -19,5 +27,9 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(of = {"password"})
 public class PasswordDto {
 
+	@NotNull(message = "Le mot de passe ne peut pas être vide")
+	@NotBlank(message = "Le mot de passe doit être complété")
+	@Length(min = 6, message = "Mettre un mot de passe de minimum 6 caractères")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	String password;
 }

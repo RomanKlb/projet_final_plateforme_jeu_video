@@ -17,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,7 @@ public class Game {
 
     private String image;
 
+    @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Reviews> reviews;

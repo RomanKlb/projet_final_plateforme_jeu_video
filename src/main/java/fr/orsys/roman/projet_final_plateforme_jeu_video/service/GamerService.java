@@ -16,4 +16,8 @@ public interface GamerService {
 
 	Gamer updatePasswordGamer(Long id, PasswordDto passwordDto);
 
+	boolean existsByEmail(String email);
+
+	boolean existsbyPseudo(String pseudo);
+
 }
