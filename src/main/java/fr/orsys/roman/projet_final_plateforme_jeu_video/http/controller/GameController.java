@@ -2,13 +2,18 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
@@ -30,6 +36,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
  */
 @RestController
 @RequestMapping(path="/game") 
+@Validated
 public class GameController {
 	private final GameService gameService;
 	Logger log = LoggerFactory.getLogger(this.getClass());
@@ -46,29 +53,45 @@ public class GameController {
 		if (gameDto.getReleaseDate() == null) {
 			gameDto.setReleaseDate(LocalDate.now());
 		}
-		if (gameDto.getReleaseDate().isAfter(LocalDate.now())) {
+		/*if (gameDto.getReleaseDate().isAfter(LocalDate.now())) {
 			throw new DateIsInTheFuturException("La date sortie soit etre dans le passé");
-		}
+		}*/
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
 				log.error(objectError.getDefaultMessage());
+				System.out.println("Validation error ->" + objectError.getDefaultMessage());
 			}
 		}
 		return this.gameService.saveGame(gameDto);
 	}
 	
-	@ExceptionHandler(DateIsInTheFuturException.class)
-	//@ResponseStatus(code = HttpStatus.)
+	/*@ExceptionHandler(DateIsInTheFuturException.class)
+	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)// Maintenant je dois trouver un status code parlant
 	public String traiterDateIsInTheFuturException() {
 		return "La date de sortie ne peut être dans le futur";
-	}
+	}*/
 	
+	/**
+	 * Handling javax validation constraints
+	 * @param exception
+	 * @return
+	 */
+	/*@ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    @ResponseStatus(code=HttpStatus.UNPROCESSABLE_ENTITY)
+    public String traiterDonneesInvalides(Exception exception) {
+        return exception.getMessage();
+    }*/
+	
+	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    @ResponseStatus(code=HttpStatus.UNPROCESSABLE_ENTITY)
+    public List<String> traiterDonneesInvalidesAvecDetails(ConstraintViolationException exception) {
+        return exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+    }
 	@GetMapping("/all")
 	public List<Game> getAll() {
 		return gameService.getAll();
 	}
-	
 	@GetMapping("{id}")
 	public Game findOneGame(@PathVariable Long id) {
 		log.info("controller findOneGame");

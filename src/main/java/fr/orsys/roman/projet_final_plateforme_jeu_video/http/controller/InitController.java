@@ -144,7 +144,7 @@ public class InitController {
 			CreateGameDto gtfo = new CreateGameDto();
 			List<Long> platforms = new ArrayList<>(Arrays.asList(1L));
 			gtfo.setName("GTFO");
-			gtfo.setDescription("Work together or Die together");
+			gtfo.setDescription("GTFO est un jeu vidéo coopératif de tir à la première personne et de type survival horror développé par le studio indépendant suédois 10 Chambers Collective. GTFO est sorti en accès anticipé le 9 décembre 2019 sur Windows et a reçu des réactions positives des utilisateurs");
 			gtfo.setReleaseDate(LocalDate.of(2021, 12, 9));
 			gtfo.setClassificationId(3L);
 			gtfo.setBusinessModelId(2L);
@@ -235,6 +235,17 @@ public class InitController {
 			dto.setName("Tom Clancy's Rainbow Six: Extraction");
 			dto.setDescription("Tom Clancy's Rainbow Six: Extraction est un jeu vidéo survival horror en coopération de un à trois joueurs, développé par Ubisoft Montréal et édité par Ubisoft, sorti le 20 janvier 2022 sur PlayStation 4, Xbox One, Amazon Luna, Stadia, Windows, PlayStation 5 et Xbox Series");
 			dto.setReleaseDate(LocalDate.of(2018, 3, 26));
+			dto.setClassificationId(5L);
+			dto.setBusinessModelId(2L);
+			dto.setGenreId(4L);
+			dto.setPlatformIds(platforms);
+			dto.setEditorId(3L);
+			gameService.saveGame(dto);
+			
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			dto.setName("Tom Clancy's Rainbow Six: Siege");
+			dto.setDescription("Tom Clancy's Rainbow Six Siege est un jeu vidéo de tir tactique développé par Ubisoft Montréal et édité par Ubisoft, sorti le 1ᵉʳ décembre 2015 sur PlayStation 4, Xbox One et Windows. Le jeu sort également sur Google Stadia le 30 juin 2021.");
+			dto.setReleaseDate(LocalDate.of(2015, 12, 1));
 			dto.setClassificationId(5L);
 			dto.setBusinessModelId(2L);
 			dto.setGenreId(4L);
