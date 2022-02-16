@@ -14,8 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,6 +47,8 @@ public class Game {
     @Length(max = 10000, message = "La description est maximum de 10000 caractères")
     private String description;
 
+    @DateTimeFormat(iso = ISO.DATE)
+    @Past(message = "La date de sortie doit être dans le passé")
     private LocalDate releaseDate;
 
     private String image;

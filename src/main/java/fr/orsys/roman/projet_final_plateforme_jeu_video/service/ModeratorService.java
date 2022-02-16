@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.ModeratorAlreadyExistInDbException;
 
 public interface ModeratorService {
 

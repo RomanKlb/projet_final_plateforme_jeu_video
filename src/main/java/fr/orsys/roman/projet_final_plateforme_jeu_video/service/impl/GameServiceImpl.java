@@ -107,4 +107,9 @@ public class GameServiceImpl implements GameService {
 		return game;
 	}
 
+	@Override
+	public boolean existsById(Long gameId) {
+		return gameRepository.existsById(gameId);
+	}
+
 }

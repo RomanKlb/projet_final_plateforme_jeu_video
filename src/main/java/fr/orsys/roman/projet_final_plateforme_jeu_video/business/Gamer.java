@@ -29,6 +29,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Gamer extends User{
 
+	@NotNull(message = "La date de naissance ne peut pas être vide")
 	@DateTimeFormat(iso = ISO.DATE)
 	@Past(message = "La date de naissance doit être dans le passé")
 	private LocalDate birthDate;

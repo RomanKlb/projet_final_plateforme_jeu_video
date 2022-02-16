@@ -16,4 +16,5 @@ public interface GameService {
 	Game getById(Long id);
 	
 	boolean deleteById(Long id);
+	boolean existsById(Long gameId);
 }

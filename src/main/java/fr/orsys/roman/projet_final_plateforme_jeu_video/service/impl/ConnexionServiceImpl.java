@@ -14,7 +14,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.LoginFormDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserResponse;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.UserNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.UserNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GamerRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ModeratorRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ConnexionService;

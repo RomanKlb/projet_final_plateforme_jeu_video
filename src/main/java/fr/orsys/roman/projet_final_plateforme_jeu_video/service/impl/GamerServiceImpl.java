@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GamerRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 
@@ -57,6 +57,11 @@ public class GamerServiceImpl implements GamerService{
 	@Override
 	public boolean existsbyPseudo(String pseudo) {
 		return gamerRepository.existsByPseudo(pseudo);
+	}
+
+	@Override
+	public boolean existsById(Long gamerId) {
+		return gamerRepository.existsById(gamerId);
 	}
 	
 	

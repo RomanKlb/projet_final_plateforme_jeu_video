@@ -9,8 +9,10 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Service;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Reviews;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateReviewsDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorNotFoundException;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ReviewsNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GamerNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ModeratorNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ReviewsNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ReviewsRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
@@ -35,13 +37,21 @@ public class ReviewsServiceImpl implements ReviewsService{
 
 
 	@Override
-	public Reviews saveOneReviews(@Valid CreateReviewsDto reviewsDto) {
-		Reviews reviews = new Reviews();
-		reviews.setDescription(reviewsDto.getDescription());
-		reviews.setRating(reviewsDto.getRating());
-		reviews.setGame(gameService.getById(reviewsDto.getGameId()));
-		reviews.setGamer(gamerService.findByIdGamer(reviewsDto.getGamerId()));
-		return reviewsRepository.save(reviews);
+	public Reviews saveOneReviews(@Valid CreateReviewsDto reviewsDto) throws GameNotFoundException, GamerNotFoundException {
+		if(gamerService.existsById(reviewsDto.getGamerId())) {
+			if(gameService.existsById(reviewsDto.getGameId())) {
+				Reviews reviews = new Reviews();
+				reviews.setDescription(reviewsDto.getDescription());
+				reviews.setRating(reviewsDto.getRating());
+				reviews.setGame(gameService.getById(reviewsDto.getGameId()));
+				reviews.setGamer(gamerService.findByIdGamer(reviewsDto.getGamerId()));
+				return reviewsRepository.save(reviews);
+			} else {
+				throw new GameNotFoundException("game not found");
+			}
+		} else {
+			throw new GamerNotFoundException("gamer not found");
+		}
 	}
 
 	@Override

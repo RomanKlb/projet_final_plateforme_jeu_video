@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -28,13 +28,13 @@ public class Reviews {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "La description doit être complété")
+	@NotNull(message = "La description doit être complété")
 	@Length(max = 5000, message = "La description est maximum de 5000 caractères")
 	private String description;
 	
 	private LocalDateTime sendingDate;
 	
-//	@NotBlank(message = "La note doit être complété")
+	@NotNull(message = "La note doit être complété")
 	@Range(min = 0, max = 20, message = "La notation est compris entre 0 et 20")
 	private Float rating;
 	

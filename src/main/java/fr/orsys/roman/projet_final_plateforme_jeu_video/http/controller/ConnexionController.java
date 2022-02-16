@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.LoginFormDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserResponse;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.UserNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.UserNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ConnexionService;
 
 @RestController

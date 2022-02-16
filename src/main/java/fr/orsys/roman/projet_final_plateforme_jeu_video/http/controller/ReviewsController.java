@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Reviews;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateReviewsDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorNotFoundException;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ReviewsNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GamerNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ModeratorNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ReviewsNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ReviewsService;
 
 @RestController
@@ -48,6 +50,13 @@ public class ReviewsController {
 		return exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
 	}
 	
+	@ExceptionHandler(fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.NotFoundException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public String traiterModeratorNotFoundException(Exception exception) {
+		return exception.getMessage();
+	}
+	
+	
 	@PatchMapping("/{idReviews}/moderator/{idModerator}")
 	public Reviews moderationReviews(@PathVariable Long idReviews, @PathVariable Long idModerator) throws ModeratorNotFoundException, ReviewsNotFoundException {
 		log.info("Controller moderationReviews");
@@ -55,7 +64,7 @@ public class ReviewsController {
 	}
 
 	@PostMapping("/save")
-	public Reviews saveOneReviews(@Valid @RequestBody CreateReviewsDto reviewsDto, BindingResult result) {
+	public Reviews saveOneReviews(@Valid @RequestBody CreateReviewsDto reviewsDto, BindingResult result) throws GameNotFoundException, GamerNotFoundException {
 		log.info("Controller saveOneReviews");
 		return reviewsService.saveOneReviews(reviewsDto);
 	}

@@ -41,6 +41,7 @@ public class UserModeratorDto {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	String password;
 	
+	@NotNull(message = "L'email ne peut pas être vide")
 	@NotBlank(message="Merci de préciser une adresse email")
 	@Email(message = "Il faut un email valide")
 	String email;

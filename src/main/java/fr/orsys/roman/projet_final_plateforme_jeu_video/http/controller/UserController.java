@@ -27,9 +27,9 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.PasswordDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.GamerAlreadyExistInDbException;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorAlreadyExistInDbException;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.ModeratorNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.ModeratorAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ModeratorNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 
@@ -53,6 +53,18 @@ public class UserController {
 	@ResponseStatus(code=HttpStatus.UNPROCESSABLE_ENTITY)
 	public List<String> traiterDonneesInvalidesAvecDetails(ConstraintViolationException exception) {
 		return exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+	}
+	
+	@ExceptionHandler(fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.AlreadyExistsInDB.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public String traiterModeratorInDbException(Exception exception) {
+		return exception.getMessage();
+	}
+	
+	@ExceptionHandler(fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.NotFoundException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public String traiterModeratorNotFoundException(Exception exception) {
+		return exception.getMessage();
 	}
 
 	/*

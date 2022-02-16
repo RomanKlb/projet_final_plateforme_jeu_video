@@ -2,6 +2,7 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -32,7 +33,9 @@ public class CreateReviewsDto {
 	@Range(min = 0, max = 20, message = "La notation est compris entre 0 et 20")
 	Float rating;
 	
+	@NotNull(message = "L'id du joueur ne doit pas être null")
 	Long gamerId;
 
+	@NotNull(message = "L'id du jeu ne doit pas être null")
 	Long gameId;
 }
