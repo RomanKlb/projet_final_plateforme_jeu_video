@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -59,11 +60,20 @@ public class GameController {
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
-				log.error(objectError.getDefaultMessage());
+				log.error("Validation error ->" + objectError.getDefaultMessage());
 				System.out.println("Validation error ->" + objectError.getDefaultMessage());
 			}
 		}
 		return this.gameService.saveGame(gameDto);
+	}
+	
+	@PutMapping("/update/{id}")
+	public Game updateGame(@Valid @RequestBody GameDto gameDto, @PathVariable Long id, BindingResult result) {
+		System.out.println("updating gameDto" + gameDto.getName() + " id : " + id);
+		if (gameDto.getReleaseDate() == null) {
+			gameDto.setReleaseDate(LocalDate.now());
+		}
+		return this.gameService.updateGame(gameDto, id);
 	}
 	
 	/*@ExceptionHandler(DateIsInTheFuturException.class)
@@ -103,4 +113,6 @@ public class GameController {
 		log.info("controller deleteOneGame");
 		return gameService.deleteById(id);
 	}
+	
+	
 }
