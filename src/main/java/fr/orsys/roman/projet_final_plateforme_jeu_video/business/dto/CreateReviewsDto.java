@@ -2,13 +2,10 @@ package fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto;
 
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
