@@ -10,6 +10,7 @@ public interface GameService {
 
 	Game saveGame(GameDto gameDto);
 	Game saveGame(CreateGameDto gameDto);
+	Game saveGame(Game game);
 	
 	List<Game> getAll();
 	
