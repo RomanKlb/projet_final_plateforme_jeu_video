@@ -92,13 +92,13 @@ public class GameController {
 	public List<Game> getAll() {
 		return gameService.getAll();
 	}
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public Game findOneGame(@PathVariable Long id) {
 		log.info("controller findOneGame");
 		return gameService.getById(id);
 	}
 	
-	@DeleteMapping("{id}/delete")
+	@DeleteMapping("/{id}/delete")
 	public boolean deleteOneGame(@PathVariable Long id) {
 		log.info("controller deleteOneGame");
 		return gameService.deleteById(id);

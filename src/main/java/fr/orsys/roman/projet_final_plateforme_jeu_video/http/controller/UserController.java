@@ -120,10 +120,6 @@ public class UserController {
 	@PatchMapping("/moderator/{id}/patchPassword")
 	public Moderator patchPasswordModerator(@PathVariable Long id, @Valid @RequestBody PasswordDto passwordDto) throws ModeratorNotFoundException {
 		log.info("controller patchPasswordModerator");
-		if(moderatorService.existsById(id)) {
-			throw new ModeratorNotFoundException("moderator not found ");
-		}
-		
 		return moderatorService.updatePasswordModerator(id, passwordDto);
 	}
 }

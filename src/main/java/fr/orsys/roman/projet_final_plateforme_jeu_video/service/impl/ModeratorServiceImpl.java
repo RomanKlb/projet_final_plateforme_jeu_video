@@ -50,7 +50,7 @@ public class ModeratorServiceImpl implements ModeratorService{
 	public Moderator updatePasswordModerator(Long id, PasswordDto passwordDto) {
 		Optional<Moderator> moderator = moderatorRepository.findById(id);
 		moderator.get().setPassword(passwordEncoder.encode(passwordDto.getPassword()));
-		return moderator.get();
+		return moderatorRepository.save(moderator.get());
 	}
 
 
