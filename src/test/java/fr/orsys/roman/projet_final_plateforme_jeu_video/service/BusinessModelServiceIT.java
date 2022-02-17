@@ -32,8 +32,8 @@ public class BusinessModelServiceIT {
 		
 		assertEquals(2, models.size());
 		
-		assertEquals("free to play", models.get(0).getName());
-		assertEquals("pay to play", models.get(1).getName());
+		assertEquals("Free to play", models.get(0).getName());
+		assertEquals("Pay to play", models.get(1).getName());
 	}
 	
 	@Test
@@ -45,7 +45,7 @@ public class BusinessModelServiceIT {
 		assertNotNull(model);
 		
 		assertEquals(1L, model.getId());
-		assertEquals("free to play", model.getName());
+		assertEquals("Free to play", model.getName());
 	}
 	
 	@Test
@@ -57,12 +57,12 @@ public class BusinessModelServiceIT {
 	@Test
 	@Order(3)
 	void createModel_argIsValid_shouldCreateEntry() {
-		BusinessModel model = businessModelService.createModel("pay to win");
+		BusinessModel model = businessModelService.createModel("Pay to win");
 		
 		assertNotNull(model);
 		
 		assertEquals(3L, model.getId());
-		assertEquals("pay to win", model.getName());
+		assertEquals("Pay to win", model.getName());
 	}
 	
 	@Test

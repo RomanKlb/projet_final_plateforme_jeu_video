@@ -12,6 +12,7 @@ public interface GameService {
 
 	Game saveGame(GameDto gameDto);
 	Game saveGame(CreateGameDto gameDto);
+	Game saveGame(Game game);
 	
 	List<Game> getAll();
 	
@@ -19,5 +20,6 @@ public interface GameService {
 	
 	boolean deleteById(Long id);
 	Game updateGame(GameDto gameDto, Long id);
+	boolean existsById(Long gameId);
 	Game constructGameByGameDto(Game game, GameDto gameDto);
 }

@@ -1,5 +1,12 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +29,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
@@ -39,7 +48,11 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 @RequestMapping(path="/game") 
 @Validated
 public class GameController {
+	
+	private static final String DOSSIER_IMAGES = "src/main/webapp/images/";
+	
 	private final GameService gameService;
+	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * @param gameService
@@ -102,16 +115,54 @@ public class GameController {
 	public List<Game> getAll() {
 		return gameService.getAll();
 	}
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public Game findOneGame(@PathVariable Long id) {
-		log.info("controller findOneGame");
 		return gameService.getById(id);
 	}
 	
-	@DeleteMapping("{id}/delete")
-	public boolean deleteOneGame(@PathVariable Long id) {
-		log.info("controller deleteOneGame");
+	@DeleteMapping("/{id}/delete")
+	public boolean deleteOneGame(@PathVariable Long id) throws IOException {
+		Game game = gameService.getById(id);
+		if(game.getImage() != null) {
+			deleteFile(game.getImage());
+		}
 		return gameService.deleteById(id);
+	}
+	
+	@PostMapping("/image/{id}")
+	public Game patchGameImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
+		System.out.println("Upload !");
+		Game game = gameService.getById(id);
+		game.setImage(id.toString() + ".jpg");
+		saveFile(game.getImage(), file);
+		return gameService.saveGame(game);
+	}
+	
+	private static void saveFile(String nom, MultipartFile multipartFile) throws IOException {
+        Path chemin = Paths.get(DOSSIER_IMAGES);
+
+        if (!Files.exists(chemin)) {
+            Files.createDirectories(chemin);
+        }
+
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            Path cheminFichier = chemin.resolve(nom);
+            Files.copy(inputStream, cheminFichier, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ioe) {
+            throw new IOException("Erreur d'écriture : " + nom, ioe);
+        }
+    }
+	
+	private static void deleteFile(String nom) throws IOException {
+		Path chemin = Paths.get(DOSSIER_IMAGES);
+		if (!Files.exists(chemin)) {
+            Files.createDirectories(chemin);
+        }
+		String image = chemin.toString() + "\\" + nom;
+		File file = new File(image);
+		if(file != null) {
+			file.delete();
+		}
 	}
 	
 	

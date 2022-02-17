@@ -46,6 +46,7 @@ public abstract class User {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
+	@NotNull(message = "L'email ne peut pas être vide")
 	@NotBlank(message="Merci de préciser une adresse email")
 	@Email(message = "Il faut un email valide")
 	private String email;
