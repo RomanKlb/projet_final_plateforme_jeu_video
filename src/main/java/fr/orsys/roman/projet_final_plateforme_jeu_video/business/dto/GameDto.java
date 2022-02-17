@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -32,7 +32,8 @@ public class GameDto {
     String description;
     
     @DateTimeFormat(iso = ISO.DATE)
-    @Past(message = "La date de sortie doit être dans le passé")
+    @NotNull(message="Merci de renseigner la date de sortie")
+    @PastOrPresent(message = "La date de sortie doit être dans le passé")
     LocalDate releaseDate;
     
     @NotNull(message = "La classification doit être mentionnée")
