@@ -83,7 +83,7 @@ public class ReviewsServiceImpl implements ReviewsService{
 	public Reviews moderationReviews(Long idReviews, Long idModerator) throws ModeratorNotFoundException, ReviewsNotFoundException {
 		if(reviewsRepository.existsById(idReviews)) {
 			if(moderatorService.moderatorExist(idModerator)) {
-				Optional<Reviews> reviews = reviewsRepository.findById(idModerator);
+				Optional<Reviews> reviews = reviewsRepository.findById(idReviews);
 				reviews.get().setModerator(moderatorService.findByIdModerator(idModerator));
 				reviews.get().setModeratorDate(LocalDateTime.now());
 				return reviewsRepository.save(reviews.get());
