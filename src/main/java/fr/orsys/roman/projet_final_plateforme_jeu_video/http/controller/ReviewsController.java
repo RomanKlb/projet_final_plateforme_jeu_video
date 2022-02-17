@@ -86,4 +86,9 @@ public class ReviewsController {
 		log.info("Controller deleteOneReviews");
 		return reviewsService.deleteOneReviews(id);
 	}
+	
+	@GetMapping("/game/{id}")
+	public List<Reviews> findAllByGameId(@PathVariable Long id) {
+		return reviewsService.findAllByGameId(id);
+	}
 }

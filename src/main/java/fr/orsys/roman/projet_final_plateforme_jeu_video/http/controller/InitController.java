@@ -10,12 +10,15 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.ModeratorAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
@@ -30,12 +33,13 @@ public class InitController {
 	private final ModeratorService moderatorService;
 	private final EditorService editorService;
 	private final GameService gameService;
+	private final GamerService gamerService;
 
 	
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
 			GenreService genreService, BusinessModelService businessModelService, ModeratorService moderatorService,
-			EditorService editorService, GameService gameService) {
+			EditorService editorService, GameService gameService, GamerService gamerService) {
 		super();
 		this.classificationService = classificationService;
 		this.platformService = platformService;
@@ -44,10 +48,11 @@ public class InitController {
 		this.moderatorService = moderatorService;
 		this.editorService = editorService;
 		this.gameService = gameService;
+		this.gamerService = gamerService;
 	}
 
 	@PostConstruct
-	private void init() throws ModeratorAlreadyExistInDbException {
+	private void init() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException {
 		initClassifications();
 		initPlatforms();
 		initGenres();
@@ -55,6 +60,48 @@ public class InitController {
 		initModerator();
 		initEditors();
 		initGames();
+		initGamers();
+	}
+	
+	private void initGamers() throws GamerAlreadyExistInDbException {
+		if(gamerService.findAll().size() < 1) {
+			UserGamerDto gamer = new UserGamerDto();
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("a@a.fr");
+			gamer.setPseudo("coco");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("b@b.fr");
+			gamer.setPseudo("coca");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("c@c.fr");
+			gamer.setPseudo("dodo");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("d@d.fr");
+			gamer.setPseudo("didi");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("e@e.fr");
+			gamer.setPseudo("dodu");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("f@f.fr");
+			gamer.setPseudo("efdo");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+		}
 	}
 
 	private void initModerator() throws ModeratorAlreadyExistInDbException {
@@ -209,7 +256,7 @@ public class InitController {
 			dto.setEditorId(3L);
 			gameService.saveGame(dto);
 			
-			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 9L, 10L, 11L));
 			dto.setName("Assassin's Creed Valhalla");
 			dto.setDescription("Assassin's Creed Valhalla est un jeu vidéo d'action-aventure et de rôle, développé par Ubisoft Montréal et édité par Ubisoft, sorti en novembre 2020 sur Microsoft Windows, PlayStation 4, Xbox One, Xbox Series, Google Stadia et PlayStation 5");
 			dto.setReleaseDate(LocalDate.of(2020, 11, 10));
@@ -231,7 +278,7 @@ public class InitController {
 			dto.setEditorId(3L);
 			gameService.saveGame(dto);
 			
-			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 9L, 10L, 11L));
 			dto.setName("Tom Clancy's Rainbow Six: Extraction");
 			dto.setDescription("Tom Clancy's Rainbow Six: Extraction est un jeu vidéo survival horror en coopération de un à trois joueurs, développé par Ubisoft Montréal et édité par Ubisoft, sorti le 20 janvier 2022 sur PlayStation 4, Xbox One, Amazon Luna, Stadia, Windows, PlayStation 5 et Xbox Series");
 			dto.setReleaseDate(LocalDate.of(2018, 3, 26));
@@ -242,7 +289,7 @@ public class InitController {
 			dto.setEditorId(3L);
 			gameService.saveGame(dto);
 			
-			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 7L, 9L, 10L));
+			platforms = new ArrayList<>(Arrays.asList(1L, 5L, 6L, 9L, 10L, 11L));
 			dto.setName("Tom Clancy's Rainbow Six: Siege");
 			dto.setDescription("Tom Clancy's Rainbow Six Siege est un jeu vidéo de tir tactique développé par Ubisoft Montréal et édité par Ubisoft, sorti le 1ᵉʳ décembre 2015 sur PlayStation 4, Xbox One et Windows. Le jeu sort également sur Google Stadia le 30 juin 2021.");
 			dto.setReleaseDate(LocalDate.of(2015, 12, 1));
