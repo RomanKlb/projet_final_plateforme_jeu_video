@@ -39,11 +39,10 @@ public class GameServiceImpl implements GameService {
 
 	}
 
-	/*@Override
+	@Override
 	public Game saveGame(Game game) {
-		
-		return this.saveGame(game);
-	}*/
+		return gameRepository.save(game);
+	}
 
 	@Override
 	public Game saveGame(GameDto gameDto) {
