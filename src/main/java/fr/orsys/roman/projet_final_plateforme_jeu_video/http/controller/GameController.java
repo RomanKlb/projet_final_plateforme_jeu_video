@@ -1,5 +1,12 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,10 +26,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
@@ -38,7 +48,11 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 @RequestMapping(path="/game") 
 @Validated
 public class GameController {
+	
+	private static final String DOSSIER_IMAGES = "src/main/webapp/images/";
+	
 	private final GameService gameService;
+	
 	Logger log = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * @param gameService
@@ -59,11 +73,20 @@ public class GameController {
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
-				log.error(objectError.getDefaultMessage());
+				log.error("Validation error ->" + objectError.getDefaultMessage());
 				System.out.println("Validation error ->" + objectError.getDefaultMessage());
 			}
 		}
 		return this.gameService.saveGame(gameDto);
+	}
+	
+	@PutMapping("/update/{id}")
+	public Game updateGame(@Valid @RequestBody GameDto gameDto, @PathVariable Long id, BindingResult result) {
+		System.out.println("updating gameDto" + gameDto.getName() + " id : " + id);
+		if (gameDto.getReleaseDate() == null) {
+			gameDto.setReleaseDate(LocalDate.now());
+		}
+		return this.gameService.updateGame(gameDto, id);
 	}
 	
 	/*@ExceptionHandler(DateIsInTheFuturException.class)
@@ -94,13 +117,53 @@ public class GameController {
 	}
 	@GetMapping("/{id}")
 	public Game findOneGame(@PathVariable Long id) {
-		log.info("controller findOneGame");
 		return gameService.getById(id);
 	}
 	
 	@DeleteMapping("/{id}/delete")
-	public boolean deleteOneGame(@PathVariable Long id) {
-		log.info("controller deleteOneGame");
+	public boolean deleteOneGame(@PathVariable Long id) throws IOException {
+		Game game = gameService.getById(id);
+		if(game.getImage() != null) {
+			deleteFile(game.getImage());
+		}
 		return gameService.deleteById(id);
 	}
+	
+	@PostMapping("/image/{id}")
+	public Game patchGameImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
+		System.out.println("Upload !");
+		Game game = gameService.getById(id);
+		game.setImage(id.toString() + ".jpg");
+		saveFile(game.getImage(), file);
+		return gameService.saveGame(game);
+	}
+	
+	private static void saveFile(String nom, MultipartFile multipartFile) throws IOException {
+        Path chemin = Paths.get(DOSSIER_IMAGES);
+
+        if (!Files.exists(chemin)) {
+            Files.createDirectories(chemin);
+        }
+
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            Path cheminFichier = chemin.resolve(nom);
+            Files.copy(inputStream, cheminFichier, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ioe) {
+            throw new IOException("Erreur d'écriture : " + nom, ioe);
+        }
+    }
+	
+	private static void deleteFile(String nom) throws IOException {
+		Path chemin = Paths.get(DOSSIER_IMAGES);
+		if (!Files.exists(chemin)) {
+            Files.createDirectories(chemin);
+        }
+		String image = chemin.toString() + "\\" + nom;
+		File file = new File(image);
+		if(file != null) {
+			file.delete();
+		}
+	}
+	
+	
 }

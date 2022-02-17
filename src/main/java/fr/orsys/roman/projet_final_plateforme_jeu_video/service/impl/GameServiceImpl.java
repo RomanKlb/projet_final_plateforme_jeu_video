@@ -39,24 +39,15 @@ public class GameServiceImpl implements GameService {
 
 	}
 
-	/*@Override
+	@Override
 	public Game saveGame(Game game) {
-		
-		return this.saveGame(game);
-	}*/
+		return gameRepository.save(game);
+	}
 
 	@Override
 	public Game saveGame(GameDto gameDto) {
 		Game game = new Game();
-		game.setBusinessModel(businessModelService.getByName(gameDto.getBusinessModelName()));
-		game.setClassification(classificationService.getClassificationByName(gameDto.getClassificationName()));
-		game.setEditor(editorService.getEditorByName(gameDto.getEditorName()));
-		game.setGenre(genreService.getGenreByName(gameDto.getGenreName()));
-		game.setName(gameDto.getName());
-		game.setDescription(gameDto.getDescription());
-		game.setReleaseDate(gameDto.getReleaseDate());
-		game = setPlatformsByName(game, gameDto.getPlatformNames());
-		return gameRepository.save(game);
+		return gameRepository.save(this.constructGameByGameDto(game, gameDto));
 	}
 	
 	@Override
@@ -104,6 +95,26 @@ public class GameServiceImpl implements GameService {
 			platforms.add(platformService.getPlatformByName(e));
 		}
 		game.setPlatforms(platforms);
+		return game;
+	}
+
+	@Override
+	public Game updateGame(GameDto gameDto, Long id) {
+		Game game = this.gameRepository.findById(id).orElseThrow();
+		
+		return gameRepository.save(constructGameByGameDto(game, gameDto));
+	}
+
+	@Override
+	public Game constructGameByGameDto(Game game, GameDto gameDto) {
+		game.setBusinessModel(businessModelService.getByName(gameDto.getBusinessModelName()));
+		game.setClassification(classificationService.getClassificationByName(gameDto.getClassificationName()));
+		game.setEditor(editorService.getEditorByName(gameDto.getEditorName()));
+		game.setGenre(genreService.getGenreByName(gameDto.getGenreName()));
+		game.setName(gameDto.getName());
+		game.setDescription(gameDto.getDescription());
+		game.setReleaseDate(gameDto.getReleaseDate());
+		game = setPlatformsByName(game, gameDto.getPlatformNames());
 		return game;
 	}
 
