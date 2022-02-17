@@ -68,6 +68,11 @@ public class ReviewsServiceImpl implements ReviewsService{
 	public List<Reviews> findAllReviews() {
 		return reviewsRepository.findAll();
 	}
+	
+	@Override
+	public List<Reviews> findAllByGameId(Long id) {
+		return reviewsRepository.findAllByGameIdAndModeratorIdIsNotNull(id);
+	}
 
 	@Override
 	public boolean deleteOneReviews(Long id) {

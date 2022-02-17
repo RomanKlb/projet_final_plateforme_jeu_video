@@ -120,6 +120,11 @@ public class GameController {
 		return gameService.getById(id);
 	}
 	
+	@GetMapping("/count")
+	public Long getGameCount() {
+		return gameService.getCount();
+	}
+	
 	@DeleteMapping("/{id}/delete")
 	public boolean deleteOneGame(@PathVariable Long id) throws IOException {
 		Game game = gameService.getById(id);
