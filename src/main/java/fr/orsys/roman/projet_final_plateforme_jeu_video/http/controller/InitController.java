@@ -60,16 +60,52 @@ public class InitController {
 		initModerator();
 		initEditors();
 		initGames();
+		initGamers();
 	}
-
-	private void initModerator() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException {
-		if(moderatorService.findAll().size() < 1) {
+	
+	private void initGamers() throws GamerAlreadyExistInDbException {
+		if(gamerService.findAll().size() < 1) {
 			UserGamerDto gamer = new UserGamerDto();
 			gamer.setBirthDate(LocalDate.now().minusYears(5));
 			gamer.setEmail("a@a.fr");
 			gamer.setPseudo("coco");
 			gamer.setPassword("azerty");
 			gamerService.saveUserGamer(gamer);
+
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("b@b.fr");
+			gamer.setPseudo("coca");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("c@c.fr");
+			gamer.setPseudo("dodo");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("d@d.fr");
+			gamer.setPseudo("didi");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("e@e.fr");
+			gamer.setPseudo("dodu");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+			
+			gamer.setBirthDate(LocalDate.now().minusYears(5));
+			gamer.setEmail("f@f.fr");
+			gamer.setPseudo("efdo");
+			gamer.setPassword("azerty");
+			gamerService.saveUserGamer(gamer);
+		}
+	}
+
+	private void initModerator() throws ModeratorAlreadyExistInDbException {
+		if(moderatorService.findAll().size() < 1) {
 			UserModeratorDto moderator1 = new UserModeratorDto();
 			moderator1.setEmail("alaric@gmail.com");
 			moderator1.setPassword("azerty");

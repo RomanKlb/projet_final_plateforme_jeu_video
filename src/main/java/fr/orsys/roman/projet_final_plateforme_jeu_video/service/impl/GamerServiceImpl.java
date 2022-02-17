@@ -1,5 +1,6 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -43,6 +44,8 @@ public class GamerServiceImpl implements GamerService{
 		log.info("Service findByIdGamer");
 		return gamerRepository.findById(id).orElseThrow();
 	}
+	
+	
 
 	@Override
 	public Gamer updatePasswordGamer(Long id, PasswordDto passwordDto) {
@@ -64,6 +67,11 @@ public class GamerServiceImpl implements GamerService{
 	@Override
 	public boolean existsById(Long gamerId) {
 		return gamerRepository.existsById(gamerId);
+	}
+
+	@Override
+	public List<Gamer> findAll() {
+		return gamerRepository.findAll();
 	}
 	
 	
