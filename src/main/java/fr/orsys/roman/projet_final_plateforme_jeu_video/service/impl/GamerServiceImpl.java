@@ -1,5 +1,6 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -35,7 +36,8 @@ public class GamerServiceImpl implements GamerService{
 	@Override
 	public Gamer saveUserGamer(@Valid UserGamerDto gamerDto) throws GamerAlreadyExistInDbException {
 		log.info("Service saveUserGamer");
-		return gamerRepository.save(new Gamer(gamerDto.getPseudo(), passwordEncoder.encode(gamerDto.getPassword()),gamerDto.getEmail(), gamerDto.getBirthDate()));
+		return gamerRepository.save(new Gamer(gamerDto.getPseudo(), 
+				passwordEncoder.encode(gamerDto.getPassword()),gamerDto.getEmail(), gamerDto.getBirthDate()));
 	}
 
 	@Override
