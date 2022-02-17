@@ -70,6 +70,11 @@ public class GameServiceImpl implements GameService {
 	}
 	
 	@Override
+	public Long getCount() {
+		return gameRepository.count();
+	}
+	
+	@Override
 	public List<Game> getAll() {
 		return gameRepository.findAll();
 	}

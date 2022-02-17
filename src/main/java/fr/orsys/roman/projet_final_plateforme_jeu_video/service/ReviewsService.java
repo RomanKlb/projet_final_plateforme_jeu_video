@@ -16,6 +16,8 @@ public interface ReviewsService {
 	Reviews findOneReviews(Long id);
 
 	List<Reviews> findAllReviews();
+	
+	List<Reviews> findAllByGameId(Long id); 
 
 	boolean deleteOneReviews(Long id);
 

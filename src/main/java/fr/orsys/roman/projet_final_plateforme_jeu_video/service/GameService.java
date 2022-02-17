@@ -17,6 +17,7 @@ public interface GameService {
 	List<Game> getAll();
 	
 	Game getById(Long id);
+	Long getCount();
 	
 	boolean deleteById(Long id);
 	Game updateGame(GameDto gameDto, Long id);
