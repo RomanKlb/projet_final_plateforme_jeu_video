@@ -1,5 +1,7 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -44,9 +46,9 @@ public class GamerServiceImpl implements GamerService{
 
 	@Override
 	public Gamer updatePasswordGamer(Long id, PasswordDto passwordDto) {
-		Gamer gamer = gamerRepository.findById(id).orElseThrow();
-		gamer.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
-		return gamer;
+		Optional<Gamer> gamer = gamerRepository.findById(id);
+		gamer.get().setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+		return gamerRepository.save(gamer.get());
 	}
 
 	@Override
