@@ -63,13 +63,6 @@ public class GameController {
 	
 	@PostMapping("/save")
 	public Game addGame(@Valid @RequestBody GameDto gameDto, BindingResult result) throws DateIsInTheFuturException {
-		log.info(gameDto.toString());
-		if (gameDto.getReleaseDate() == null) {
-			gameDto.setReleaseDate(LocalDate.now());
-		}
-		/*if (gameDto.getReleaseDate().isAfter(LocalDate.now())) {
-			throw new DateIsInTheFuturException("La date sortie soit etre dans le passé");
-		}*/
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
