@@ -18,6 +18,8 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDt
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.ModeratorAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GamerNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
@@ -59,7 +61,7 @@ public class InitController {
 	}
 
 	@PostConstruct
-	private void init() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException {
+	private void init() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException, GameNotFoundException, GamerNotFoundException {
 		initClassifications();
 		initPlatforms();
 		initGenres();
@@ -71,58 +73,99 @@ public class InitController {
 		initReviews();
 	}
 	
-	private void initReviews() {
+	/**
+	 * Generates 10 reviews
+	 * @throws GamerNotFoundException 
+	 * @throws GameNotFoundException 
+	 */
+	private void initReviews() throws GameNotFoundException, GamerNotFoundException {
 		if(reviewsService.findAllReviews().size() < 1) {
 			CreateReviewsDto dto = new CreateReviewsDto();
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu médiocre !!!");
 			dto.setGameId(2L);
 			dto.setRating(1F);
 			dto.setGamerId(3L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu bof bof!");
 			dto.setGameId(4L);
 			dto.setRating(10F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(3L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu qui passe!");
 			dto.setGameId(4L);
 			dto.setRating(11F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(4L);
 			dto.setRating(12F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(6L);
+			reviewsService.saveOneReviews(dto);
+			
+			dto.setDescription("GTFO est un jeu coop ultra exigeant, ultra difficile, avec une ambiance extrêmement bien travaillée : très claustrophobe, très inspirée de l'univers d'Alien et même une vibe comparable à SCP sur le principe d'un complexe scientifique verrouillé car infesté de monstres pouvant mettre en péril le reste de l'humanité. Globalement si vous êtes un peu à court de jeu coop à jouer avec des potes, foncez parce que ça en vaut vraiment le coup.\r\n"
+					+ "\r\n"
+					+ "Sur quelques points négatifs que d'autres ont pu souligner :\r\n"
+					+ "\r\n"
+					+ "- Le jeu est infaisable en solo ou à moins de quatre car trop difficile : Ce n'est plus le cas grâce à l'ajout des bots dans la 1.0. Bots qui sont d'ailleurs vraiment bons pendant les fights, ils ont une meilleures visée que la plupart des joueurs et ne feront pas non plus foirer vos phases furtives. Quand bien même vous ne voulez pas avoir recours aux bots, je pense que la plupart des missions sont faisables à trois à condition de bien connaître les mécaniques. Si vous êtes un dieu vivant au jeu vous pouvez essayer en solo, personnellement jamais réussi mais il existe pas mal de vidéo sur Youtube de gens qui y arrive donc allez voir, c'est assez impressionnant.\r\n"
+					+ "\r\n"
+					+ "- À la moindre erreur c'est l'échec assuré : Pareil ce n'est plus le cas depuis l'ajout des points de contrôle de la 1.0, même si personnellement je rechigne un peu à les utiliser. Pour remettre dans le contexte, quand vous lancez une mission vous êtes littéralement un prisonnier qu'on force à plonger dans un complexe sous-terrain ultra-dangereux où vos chances de survivre sont proches de zéro. Donc échouer c'est un peu la \"norme\" durant vos première partie, ça ira mieux au fur et à mesure que vous apprendrez de vos erreurs. Il faut juste insister un peu et pas se laisser décourager.\r\n"
+					+ "\r\n"
+					+ "- Pas assez d'armes et d'équipement disponible : Le jeu fonctionne avec des rotations de Rundown et à chaque fois que cette-dernière change, une partie des équipement disponible change avec elle. On se retrouve pour une Rundown avec généralement une dizaine d'arme principale, une dizaine d'armes secondaire, 6 ou 7 gadgets et 4 armes de mêlée. On se retrouve du coup à faire le tour de tout ça assez rapidement, c'est vrai.\r\n"
+					+ "\r\n"
+					+ "- Une mission prend 2 heures à être complétée : Oui ou 1h30 si vous n'explorez pas toute la carte et que vous vous concentrez sur l'objectif. C'est long, c'est vrai. Moi ça ne me dérange pas mais ça peu en rebuter certains.\r\n"
+					+ "\r\n"
+					+ "Voilà mon avis sur le jeu, j'espère qu'il aura suffit à convaincre certains de le prendre au moins pour tester. ");
+			dto.setGameId(1L);
+			dto.setRating(12F);
+			dto.setGamerId(6L);
+			reviewsService.saveOneReviews(dto);
+			
+			dto.setDescription("Très bon jeu coop. Auparavant relativement hardcore mais s'est beaucoup casualisé (notamment par l'ajout de checkpoints) lors de la sortie officielle du jeu. C'est très positif pour les nouveaux joueurs potentiels, gros ajouts de narration.\r\n"
+					+ "Je conseillais le jeu à tout le monde avant la sortie du jeu, dorénavant encore plus.\r\n"
+					+ "C'est un excellent revamp de la recette L4D / coop à 4. Exigeant et grisant.");
+			dto.setGameId(1L);
+			dto.setRating(12F);
+			dto.setGamerId(5L);
+			reviewsService.saveOneReviews(dto);
 		}
 	}
 	
