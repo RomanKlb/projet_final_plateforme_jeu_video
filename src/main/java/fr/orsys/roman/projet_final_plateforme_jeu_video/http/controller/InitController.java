@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateReviewsDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
@@ -22,6 +23,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ReviewsService;
 
 @Controller
 public class InitController {
@@ -34,12 +36,13 @@ public class InitController {
 	private final EditorService editorService;
 	private final GameService gameService;
 	private final GamerService gamerService;
+	private final ReviewsService reviewsService;
 
 	
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
 			GenreService genreService, BusinessModelService businessModelService, ModeratorService moderatorService,
-			EditorService editorService, GameService gameService, GamerService gamerService) {
+			EditorService editorService, GameService gameService, GamerService gamerService, ReviewsService reviewsService) {
 		super();
 		this.classificationService = classificationService;
 		this.platformService = platformService;
@@ -49,6 +52,7 @@ public class InitController {
 		this.editorService = editorService;
 		this.gameService = gameService;
 		this.gamerService = gamerService;
+		this.reviewsService = reviewsService;
 	}
 
 	@PostConstruct
@@ -61,8 +65,68 @@ public class InitController {
 		initEditors();
 		initGames();
 		initGamers();
+		initReviews();
 	}
 	
+	private void initReviews() {
+		if(reviewsService.findAllReviews().size() < 1) {
+			CreateReviewsDto dto = new CreateReviewsDto();
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(1L);
+			dto.setRating(12F);
+			dto.setGamerId(1L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(1L);
+			dto.setRating(12F);
+			dto.setGamerId(2L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(1L);
+			dto.setRating(12F);
+			dto.setGamerId(1L);
+			
+			dto.setDescription("Un jeu médiocre !!!");
+			dto.setGameId(2L);
+			dto.setRating(1F);
+			dto.setGamerId(3L);
+			
+			dto.setDescription("Un jeu bof bof!");
+			dto.setGameId(4L);
+			dto.setRating(10F);
+			dto.setGamerId(2L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(5L);
+			dto.setRating(12F);
+			dto.setGamerId(1L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(5L);
+			dto.setRating(12F);
+			dto.setGamerId(3L);
+			
+			dto.setDescription("Un jeu qui passe!");
+			dto.setGameId(4L);
+			dto.setRating(11F);
+			dto.setGamerId(1L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(4L);
+			dto.setRating(12F);
+			dto.setGamerId(2L);
+			
+			dto.setDescription("Un très bon jeu !");
+			dto.setGameId(5L);
+			dto.setRating(12F);
+			dto.setGamerId(6L);
+		}
+	}
+	
+	/**
+	 * Generates 6 Gamers
+	 * @throws GamerAlreadyExistInDbException
+	 */
 	private void initGamers() throws GamerAlreadyExistInDbException {
 		if(gamerService.findAll().size() < 1) {
 			UserGamerDto gamer = new UserGamerDto();
@@ -104,6 +168,10 @@ public class InitController {
 		}
 	}
 
+	/**
+	 * Generates 3 Moderators
+	 * @throws ModeratorAlreadyExistInDbException
+	 */
 	private void initModerator() throws ModeratorAlreadyExistInDbException {
 		if(moderatorService.findAll().size() < 1) {
 			UserModeratorDto moderator1 = new UserModeratorDto();
@@ -127,6 +195,9 @@ public class InitController {
 		}
 	}
 	
+	/**
+	 * Generates the 5 PEGI Classifications
+	 */
 	private void initClassifications() {
 		if (classificationService.getClassifications().size() < 1) {
 			classificationService.createClassification("PEGI 3");
@@ -137,6 +208,9 @@ public class InitController {
 		}
 	}
 
+	/**
+	 * Generates 13 different platforms
+	 */
 	private void initPlatforms() {
 		if (platformService.getPlatforms().size() < 1) {
 			platformService.createPlatform("PC");
@@ -155,8 +229,11 @@ public class InitController {
 		}
 	}
 
+	/**
+	 * Generates 7 Game Genres
+	 */
 	private void initGenres() {
-		if (genreService.count() == 0) {
+		if (genreService.count() < 1) {
 			genreService.addGenre("Sandbox");
 			genreService.addGenre("Action");
 			genreService.addGenre("Adventure");
@@ -167,6 +244,9 @@ public class InitController {
 		}
 	}
 
+	/**
+	 * Generates 2 BusinessModels
+	 */
 	private void initBusinessModel() {
 		if(businessModelService.getAll().size() < 1) {
 			businessModelService.createModel("Free to play");
@@ -174,6 +254,9 @@ public class InitController {
 		}
 	}
 	
+	/**
+	 * Generates 7 Publishers
+	 */
 	private void initEditors() {
 		if(editorService.getEditors().size() < 1) {
 			editorService.createEditor("Electronic Arts");
@@ -186,6 +269,10 @@ public class InitController {
 		}
 	}
 	
+	
+	/**
+	 * Generates 10 different games
+	 */
 	private void initGames() {
 		if(gameService.getAll().size() < 1) {
 			CreateGameDto gtfo = new CreateGameDto();
