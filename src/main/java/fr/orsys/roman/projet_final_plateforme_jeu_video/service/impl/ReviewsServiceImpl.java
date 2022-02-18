@@ -100,4 +100,16 @@ public class ReviewsServiceImpl implements ReviewsService{
 		}
 	}
 
+
+	@Override
+	public long count() {
+		return this.reviewsRepository.count();
+	}
+
+
+	@Override
+	public Reviews saveReviews(Reviews reviews) {
+		return this.reviewsRepository.save(reviews);
+	}
+
 }

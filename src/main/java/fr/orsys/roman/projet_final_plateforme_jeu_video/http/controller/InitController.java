@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Reviews;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
@@ -22,10 +25,11 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GamerService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GenreService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ModeratorService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.PlatformService;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ReviewsService;
 
 @Controller
 public class InitController {
-
+	private static Random rand = new Random();
 	private final ClassificationService classificationService;
 	private final PlatformService platformService;
 	private final GenreService genreService;
@@ -34,12 +38,13 @@ public class InitController {
 	private final EditorService editorService;
 	private final GameService gameService;
 	private final GamerService gamerService;
+	private final ReviewsService reviewsService;
 
 	
 
 	public InitController(ClassificationService classificationService, PlatformService platformService,
 			GenreService genreService, BusinessModelService businessModelService, ModeratorService moderatorService,
-			EditorService editorService, GameService gameService, GamerService gamerService) {
+			EditorService editorService, GameService gameService, GamerService gamerService, ReviewsService reviewsService) {
 		super();
 		this.classificationService = classificationService;
 		this.platformService = platformService;
@@ -49,6 +54,7 @@ public class InitController {
 		this.editorService = editorService;
 		this.gameService = gameService;
 		this.gamerService = gamerService;
+		this.reviewsService = reviewsService;
 	}
 
 	@PostConstruct
@@ -299,6 +305,6 @@ public class InitController {
 			dto.setPlatformIds(platforms);
 			dto.setEditorId(3L);
 			gameService.saveGame(dto);
-		}
+		}	
 	}
 }

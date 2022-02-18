@@ -12,7 +12,8 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFo
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ReviewsNotFoundException;
 
 public interface ReviewsService {
-
+	
+	long count();
 	Reviews findOneReviews(Long id);
 
 	List<Reviews> findAllReviews();
@@ -24,5 +25,6 @@ public interface ReviewsService {
 	Reviews saveOneReviews(@Valid CreateReviewsDto reviewsDto) throws GameNotFoundException, GamerNotFoundException;
 
 	Reviews moderationReviews(Long idReviews, Long idModerator) throws ModeratorNotFoundException, ReviewsNotFoundException;
+	Reviews saveReviews(Reviews reviews);
 
 }
