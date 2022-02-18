@@ -15,6 +15,8 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDt
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GamerAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.ModeratorAlreadyExistInDbException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GamerNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
@@ -56,7 +58,7 @@ public class InitController {
 	}
 
 	@PostConstruct
-	private void init() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException {
+	private void init() throws ModeratorAlreadyExistInDbException, GamerAlreadyExistInDbException, GameNotFoundException, GamerNotFoundException {
 		initClassifications();
 		initPlatforms();
 		initGenres();
@@ -68,58 +70,73 @@ public class InitController {
 		initReviews();
 	}
 	
-	private void initReviews() {
+	/**
+	 * Generates 10 reviews
+	 * @throws GamerNotFoundException 
+	 * @throws GameNotFoundException 
+	 */
+	private void initReviews() throws GameNotFoundException, GamerNotFoundException {
 		if(reviewsService.findAllReviews().size() < 1) {
 			CreateReviewsDto dto = new CreateReviewsDto();
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(1L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu médiocre !!!");
 			dto.setGameId(2L);
 			dto.setRating(1F);
 			dto.setGamerId(3L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu bof bof!");
 			dto.setGameId(4L);
 			dto.setRating(10F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(3L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un jeu qui passe!");
 			dto.setGameId(4L);
 			dto.setRating(11F);
 			dto.setGamerId(1L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(4L);
 			dto.setRating(12F);
 			dto.setGamerId(2L);
+			reviewsService.saveOneReviews(dto);
 			
 			dto.setDescription("Un très bon jeu !");
 			dto.setGameId(5L);
 			dto.setRating(12F);
 			dto.setGamerId(6L);
+			reviewsService.saveOneReviews(dto);
 		}
 	}
 	
