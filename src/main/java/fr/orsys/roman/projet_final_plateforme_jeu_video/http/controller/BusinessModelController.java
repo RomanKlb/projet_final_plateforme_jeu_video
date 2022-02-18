@@ -28,7 +28,7 @@ public class BusinessModelController {
 	}
 	
 	@GetMapping("/all")
-	public List<BusinessModel> getEditors() {
+	public List<BusinessModel> getBusinessModels() {
 		return businessModelService.getAll();
 	}
 	
