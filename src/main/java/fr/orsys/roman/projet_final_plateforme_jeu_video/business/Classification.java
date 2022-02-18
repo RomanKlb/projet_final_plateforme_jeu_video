@@ -47,6 +47,11 @@ public class Classification {
 		this.name = name;
 	}
 	
+	public Classification(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	
 	
 	
 }

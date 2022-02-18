@@ -47,4 +47,10 @@ public class Platform {
 		super();
 		this.name = name;
 	}
+	public Platform( Long id,
+			@NotNull(message = "Le name de la classification ne peut pas être vide") @NotBlank(message = "Le name de la classification doit être complété") String name) {
+		this();
+		this.id = id;
+		this.name = name;
+	}
 }
