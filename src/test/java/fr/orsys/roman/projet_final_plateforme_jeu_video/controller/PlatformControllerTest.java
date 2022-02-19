@@ -1,10 +1,8 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.controller;
 
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +12,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.PlatformController;
 
