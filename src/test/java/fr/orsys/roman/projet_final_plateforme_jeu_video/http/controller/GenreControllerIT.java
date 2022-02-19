@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringBootTest
-public class GenreControllerTest {
+public class GenreControllerIT {
 	private MockMvc mockMvc;
 	@Autowired
 	private GenreController genreController;

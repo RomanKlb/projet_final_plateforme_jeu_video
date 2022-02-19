@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringBootTest
-public class EditorControlerTest {
+public class EditorControlerIT {
 	private MockMvc mockMvc;
 	@Autowired
 	private EditorController editorController;
