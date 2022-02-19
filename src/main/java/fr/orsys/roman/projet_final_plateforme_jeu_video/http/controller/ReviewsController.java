@@ -56,6 +56,11 @@ public class ReviewsController {
 		return exception.getMessage();
 	}
 	
+	@ExceptionHandler(fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.ReviewsNotFoundException.class)
+	@ResponseStatus(code = HttpStatus.NOT_FOUND)
+	public String traiterReviewsrNotFoundException(Exception exception) {
+		return exception.getMessage();
+	}
 	
 	@PatchMapping("/{idReviews}/moderator/{idModerator}")
 	public Reviews moderationReviews(@PathVariable Long idReviews, @PathVariable Long idModerator) throws ModeratorNotFoundException, ReviewsNotFoundException {
@@ -70,8 +75,12 @@ public class ReviewsController {
 	}
 
 	@GetMapping("/{id}")
-	public Reviews findOneReviews(@PathVariable Long id) {
+	public Reviews findOneReviews(@PathVariable Long id) throws ReviewsNotFoundException {
 		log.info("Controller findOneReviews");
+		Reviews reviews = reviewsService.findOneReviews(id);
+		if (reviews == null) {
+			throw new ReviewsNotFoundException("L'avis d'id 4 n'existe pas");
+		}
 		return reviewsService.findOneReviews(id);
 	}
 

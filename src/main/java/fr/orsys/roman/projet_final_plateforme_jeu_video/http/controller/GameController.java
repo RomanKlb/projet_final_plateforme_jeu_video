@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
@@ -37,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.DateIsInTheFuturException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 /**
  * 
@@ -67,7 +69,6 @@ public class GameController {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
 				log.error("Validation error ->" + objectError.getDefaultMessage());
-				System.out.println("Validation error ->" + objectError.getDefaultMessage());
 			}
 		}
 		return this.gameService.saveGame(gameDto);
@@ -75,7 +76,6 @@ public class GameController {
 	
 	@PutMapping("/update/{id}")
 	public Game updateGame(@Valid @RequestBody GameDto gameDto, @PathVariable Long id, BindingResult result) {
-		System.out.println("updating gameDto" + gameDto.getName() + " id : " + id);
 		if (gameDto.getReleaseDate() == null) {
 			gameDto.setReleaseDate(LocalDate.now());
 		}
@@ -83,10 +83,16 @@ public class GameController {
 	}
 	
 	/*@ExceptionHandler(DateIsInTheFuturException.class)
-	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)// Maintenant je dois trouver un status code parlant
+	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 	public String traiterDateIsInTheFuturException() {
 		return "La date de sortie ne peut être dans le futur";
 	}*/
+	
+	@ExceptionHandler(GameNotFoundException.class)
+	@ResponseStatus(code = HttpStatus.NOT_FOUND)// 
+	public String traiterGameNotFoundException(GameNotFoundException exception) {
+		return exception.getMessage();
+	}
 	
 	/**
 	 * Handling javax validation constraints
@@ -108,9 +114,15 @@ public class GameController {
 	public List<Game> getAll() {
 		return gameService.getAll();
 	}
+	
 	@GetMapping("/{id}")
-	public Game findOneGame(@PathVariable Long id) {
-		return gameService.getById(id);
+	public Game findOneGame(@PathVariable Long id) throws GameNotFoundException {
+		try {
+			Game game = gameService.getById(id);
+			return game;
+		}catch(NoSuchElementException e) {
+			throw new GameNotFoundException("Le jeu d'id " + id + " n'existe pas");
+		}
 	}
 	
 	@GetMapping("/count")
@@ -129,7 +141,6 @@ public class GameController {
 	
 	@PostMapping("/image/{id}")
 	public Game patchGameImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
-		System.out.println("Upload !");
 		Game game = gameService.getById(id);
 		game.setImage(id.toString() + ".jpg");
 		saveFile(game.getImage(), file);

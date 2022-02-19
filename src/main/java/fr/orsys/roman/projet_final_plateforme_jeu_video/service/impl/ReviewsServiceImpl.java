@@ -61,7 +61,7 @@ public class ReviewsServiceImpl implements ReviewsService{
 
 	@Override
 	public Reviews findOneReviews(Long id) {
-		return reviewsRepository.findById(id).orElseThrow();
+		return reviewsRepository.findById(id).orElse(null);
 	}
 
 	@Override

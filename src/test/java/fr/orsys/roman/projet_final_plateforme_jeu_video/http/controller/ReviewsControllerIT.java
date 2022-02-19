@@ -29,7 +29,7 @@ public class ReviewsControllerIT {
 		mockMvc = MockMvcBuilders.standaloneSetup(reviewsController).build();
 	}
 	
-	@Test
+	/*@Test
 	public void saveOneReviewsShouldSaveACreateReviewsDto() throws Exception {
 		CreateReviewsDto reviewsDto = new CreateReviewsDto();
 		reviewsDto.setDescription("Blablabla");
@@ -48,12 +48,52 @@ public class ReviewsControllerIT {
 	      .contentType(MediaType.APPLICATION_JSON)
 	      .accept(MediaType.APPLICATION_JSON))
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-		//.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("blabla"));*/
+		//.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("blabla"));
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 				.content(jsonBody)
 		.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
        
         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}*/
+	
+	@Test
+	public void findAllReviewsAListofReviewsWithOKStatus() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/all");
+		this.mockMvc.perform(requestBuilder)
+		.andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[1].rating").value(8))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[1].game.id").value(1))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[1].gamer.id").value(1))
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}
+	
+	@Test
+	public void findOneReviewsShouldReturnAReviewsWithOKStatus() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/2");
+		this.mockMvc.perform(requestBuilder)
+		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.rating").value(8))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.game.id").value(1))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.gamer.id").value(1))
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}
+	
+	@Test
+	public void findOneReviewsWithUnknowIdProvidedShouldReturnAStatus404() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/4");
+		this.mockMvc.perform(requestBuilder)
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").value("L'avis d'id 4 n'existe pas"));
+	}
+	
+	@Test
+	public void findOneReviewsWithUnknowIdProvideShouldReturnAStatus404() throws Exception {
+		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/4");
+		this.mockMvc.perform(requestBuilder)
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").value("L'avis d'id 4 n'existe pas"));
 	}
 	
 	
