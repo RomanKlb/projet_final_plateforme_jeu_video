@@ -1,6 +1,5 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Editor;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.EditorNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 
 @SpringBootTest
