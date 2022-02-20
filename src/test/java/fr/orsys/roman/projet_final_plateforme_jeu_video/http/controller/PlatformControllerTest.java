@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
@@ -66,6 +66,7 @@ public class PlatformControllerTest {
 		when(platformController.getPlatformById(5L)).thenReturn(platforms.get(4));
 	
 		mockMvc.perform(requestBuilder)
+			.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("PlayStation 5"));
 	}

@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
 
 import static org.mockito.Mockito.when;
 
@@ -69,6 +69,7 @@ public class ClassificationControllerTest {
 		when(classificationController.getClassificationById(5L)).thenReturn(classifications.get(4));
 	
 		mockMvc.perform(requestBuilder)
+			.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(5))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("PEGI 18"));
 	}
