@@ -38,7 +38,7 @@ public class ConnexionServiceImpl implements ConnexionService {
 	}
 
 
-	public ResponseEntity<UserResponse> getAuthenticateUser(@Valid LoginFormDto loginFormDto) throws UserNotFoundException {
+	public ResponseEntity<UserResponse> getAuthenticateUser(@Valid LoginFormDto loginFormDto) {
 		log.info("Service getAuthenticateUser");
 
 		System.out.println(loginFormDto.toString());
@@ -46,37 +46,29 @@ public class ConnexionServiceImpl implements ConnexionService {
 
 		if(moderatorRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Moderator> moderator = moderatorRepository.findByPseudo(loginFormDto.getPseudo());
-			if(!moderator.isPresent()) {
-				throw new UserNotFoundException("moderator not found");
-			} else {
-				if(!passwordEncoder.matches(loginFormDto.getPassword(), moderator.get().getPassword())) 
-					return ResponseEntity.badRequest().build();
+			if(!passwordEncoder.matches(loginFormDto.getPassword(), moderator.get().getPassword())) 
+				return ResponseEntity.badRequest().build();
 
-				userResponse.setId(moderator.get().getId());
-				userResponse.setPseudo(moderator.get().getPseudo());
-				userResponse.setEmail(moderator.get().getEmail());
-				userResponse.setPassword(moderator.get().getPassword());
-				userResponse.setAdmin(true);
-				userResponse.setPhoneNumber(moderator.get().getPhoneNumber());
-				return ResponseEntity.ok(userResponse);	
-			}
-			
-		} else if(gamerRepository.existsByPseudo(loginFormDto.getPseudo())) {
+			userResponse.setId(moderator.get().getId());
+			userResponse.setPseudo(moderator.get().getPseudo());
+			userResponse.setEmail(moderator.get().getEmail());
+			userResponse.setPassword(moderator.get().getPassword());
+			userResponse.setAdmin(true);
+			userResponse.setPhoneNumber(moderator.get().getPhoneNumber());
+			return ResponseEntity.ok(userResponse);	
+		} 
+		else if(gamerRepository.existsByPseudo(loginFormDto.getPseudo())) {
 			Optional<Gamer> gamer = gamerRepository.findByPseudo(loginFormDto.getPseudo());
-			if(!gamer.isPresent()) {
-				throw new UserNotFoundException("gamer not found");
-			} else {
-				if(!passwordEncoder.matches(loginFormDto.getPassword(), gamer.get().getPassword())) 
-					return ResponseEntity.badRequest().build();
+			if(!passwordEncoder.matches(loginFormDto.getPassword(), gamer.get().getPassword())) 
+				return ResponseEntity.badRequest().build();
 
-				userResponse.setId(gamer.get().getId());
-				userResponse.setPseudo(gamer.get().getPseudo());
-				userResponse.setEmail(gamer.get().getEmail());
-				userResponse.setPassword(gamer.get().getPassword());
-				userResponse.setAdmin(false);
-				userResponse.setBirthDate(gamer.get().getBirthDate());
-				return ResponseEntity.ok(userResponse);	
-			}
+			userResponse.setId(gamer.get().getId());
+			userResponse.setPseudo(gamer.get().getPseudo());
+			userResponse.setEmail(gamer.get().getEmail());
+			userResponse.setPassword(gamer.get().getPassword());
+			userResponse.setAdmin(false);
+			userResponse.setBirthDate(gamer.get().getBirthDate());
+			return ResponseEntity.ok(userResponse);	
 		}
 		else {
 			return ResponseEntity.notFound().build();

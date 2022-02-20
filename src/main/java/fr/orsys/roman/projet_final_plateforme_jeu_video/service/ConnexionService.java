@@ -8,5 +8,5 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFo
 
 public interface ConnexionService {
 
-	ResponseEntity<UserResponse> getAuthenticateUser(LoginFormDto loginFormDto) throws UserNotFoundException;
+	ResponseEntity<UserResponse> getAuthenticateUser(LoginFormDto loginFormDto);
 }

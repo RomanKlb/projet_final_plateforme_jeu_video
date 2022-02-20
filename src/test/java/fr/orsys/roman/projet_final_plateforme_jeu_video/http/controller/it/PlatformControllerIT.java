@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.it;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.PlatformController;
 
 @SpringBootTest
 public class PlatformControllerIT {

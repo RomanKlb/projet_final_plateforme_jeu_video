@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.service;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.service.it;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Classification;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.ut;
 
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
