@@ -45,7 +45,7 @@ public class ReviewsController {
 	}
 
 	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
-	@ResponseStatus(code=HttpStatus.UNPROCESSABLE_ENTITY)
+	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 	public List<String> traiterDonneesInvalidesAvecDetails(ConstraintViolationException exception) {
 		return exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
 	}
@@ -79,7 +79,7 @@ public class ReviewsController {
 		log.info("Controller findOneReviews");
 		Reviews reviews = reviewsService.findOneReviews(id);
 		if (reviews == null) {
-			throw new ReviewsNotFoundException("L'avis d'id 4 n'existe pas");
+			throw new ReviewsNotFoundException("L'avis d'id " + id + " n'existe pas");
 		}
 		return reviewsService.findOneReviews(id);
 	}
