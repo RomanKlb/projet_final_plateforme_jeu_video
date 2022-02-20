@@ -46,5 +46,11 @@ public class Genre {
 		this.name = name;
 	}
 	
+	public Genre(
+			Long id, @NotNull(message = "Le name du genre ne peut pas être vide") @NotBlank(message = "Le name du genre doit être complété") String name) {
+		this(name);
+		this.id = id;
+	}
+	
 	
 }
