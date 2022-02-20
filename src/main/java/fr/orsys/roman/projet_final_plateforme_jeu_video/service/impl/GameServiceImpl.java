@@ -1,5 +1,6 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GameAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.GameRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.BusinessModelService;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ClassificationService;
@@ -45,7 +47,11 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public Game saveGame(GameDto gameDto) {
+	public Game saveGame(GameDto gameDto) throws GameAlreadyExistInDbException {
+		
+		if(this.gameRepository.findByNameAndEditorNameAndReleaseDate(gameDto.getName(), gameDto.getEditorName(), gameDto.getReleaseDate()) != null) {
+			throw new GameAlreadyExistInDbException("Le jeu " + gameDto.getName() + " de l'éditeur " + gameDto.getEditorName() + " sorti le " + gameDto.getReleaseDate() + " existe déjà");
+		}
 		Game game = new Game();
 		return gameRepository.save(this.constructGameByGameDto(game, gameDto));
 	}
@@ -126,6 +132,11 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public boolean existsById(Long gameId) {
 		return gameRepository.existsById(gameId);
+	}
+
+	@Override
+	public Game findByNameAndEditorNameAndReleaseDate(String name, String editorName, LocalDate releaseDate) {
+		return this.gameRepository.findByNameAndEditorNameAndReleaseDate(name, editorName, releaseDate);
 	}
 
 }

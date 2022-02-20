@@ -46,4 +46,10 @@ public class BusinessModel {
 		this.name = name;
 	}
 	
+	public BusinessModel(
+			Long id, @NotNull(message = "Le nom de la classification ne peut pas être vide") @NotBlank(message = "Le nom de la classification doit être complété") String name) {
+		this(name);
+		this.id = id;
+	}
+	
 }

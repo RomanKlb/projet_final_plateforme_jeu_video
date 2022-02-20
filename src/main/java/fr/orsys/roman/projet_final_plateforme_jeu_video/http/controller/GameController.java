@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.DateIsInTheFuturException;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.existInDB.GameAlreadyExistInDbException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.exception.notFoundInDb.GameNotFoundException;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.GameService;
 /**
@@ -64,7 +65,7 @@ public class GameController {
 	}
 	
 	@PostMapping("/save")
-	public Game addGame(@Valid @RequestBody GameDto gameDto, BindingResult result) throws DateIsInTheFuturException {
+	public Game addGame(@Valid @RequestBody GameDto gameDto, BindingResult result) throws DateIsInTheFuturException, GameAlreadyExistInDbException {
 		if (result.hasErrors()) {
 			List<ObjectError> errors = result.getAllErrors();
 			for (ObjectError objectError : errors) {
@@ -91,6 +92,12 @@ public class GameController {
 	@ExceptionHandler(GameNotFoundException.class)
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)// 
 	public String traiterGameNotFoundException(GameNotFoundException exception) {
+		return exception.getMessage();
+	}
+	
+	@ExceptionHandler(GameAlreadyExistInDbException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)// 
+	public String traiterGameAlreadyExistInDbException(GameAlreadyExistInDbException exception) {
 		return exception.getMessage();
 	}
 	
