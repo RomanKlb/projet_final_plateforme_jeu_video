@@ -46,4 +46,10 @@ public class Editor {
 		this.name = name;
 	}
 	
+	public Editor(
+			Long id, @NotNull(message = "Le name de la classification ne peut pas être vide") @NotBlank(message = "Le name de la classification doit être complété") String name) {
+		this(name);
+		this.id = id;
+	}
+	
 }
