@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.ut;
 
 import static org.mockito.Mockito.when;
 
@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Editor;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.EditorController;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.EditorService;
 
 @SpringBootTest

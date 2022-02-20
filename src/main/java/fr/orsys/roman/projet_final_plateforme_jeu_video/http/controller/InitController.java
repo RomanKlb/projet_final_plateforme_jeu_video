@@ -4,14 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Controller;
 
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Reviews;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateGameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateReviewsDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserGamerDto;
@@ -32,7 +29,6 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ReviewsService;
 
 @Controller
 public class InitController {
-	private static Random rand = new Random();
 	private final ClassificationService classificationService;
 	private final PlatformService platformService;
 	private final GenreService genreService;

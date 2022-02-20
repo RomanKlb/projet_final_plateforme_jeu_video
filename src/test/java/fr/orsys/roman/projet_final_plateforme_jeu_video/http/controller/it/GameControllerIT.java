@@ -1,13 +1,10 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.it;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,7 +13,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.GameDto;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.GameController;
 
 @SpringBootTest

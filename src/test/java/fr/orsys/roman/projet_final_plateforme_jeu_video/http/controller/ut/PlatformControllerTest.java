@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Platform;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.PlatformController;
 
 @SpringBootTest
 public class PlatformControllerTest {

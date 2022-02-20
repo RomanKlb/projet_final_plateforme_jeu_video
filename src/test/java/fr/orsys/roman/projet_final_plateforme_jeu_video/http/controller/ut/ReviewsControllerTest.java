@@ -1,4 +1,4 @@
-package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller;
+package fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.ut;
 
 import static org.mockito.Mockito.when;
 
@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Game;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Gamer;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Reviews;
-import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.CreateReviewsDto;
+import fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller.ReviewsController;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.repository.ReviewsRepository;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.service.ReviewsService;
 
