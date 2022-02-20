@@ -36,12 +36,15 @@ public class ReviewsControllerIT {
 		reviewsDto.setGameId(1L);
 		reviewsDto.setGamerId(1L);
 		reviewsDto.setRating(18f);
-		String jsonBody = "{\"description\": \"Blablabla\", \"gameId\": 1, \"gamerId\": 1, \"rating\": 8}";
-		/*this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
-				.content(jsonBody)
+		
+		 ObjectMapper mapper = new ObjectMapper();
+		   String reviews = mapper.writeValueAsString(reviewsDto);
+		String jsonBody = "{\"description\":\"Blablabla\",\"gameId\":1,\"gamerId\":1,\"rating\": 8}";
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());*/
+				.accept(MediaType.APPLICATION_JSON)
+				.content(reviews))
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 		
 		/*this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 		 .content(asJsonString(reviewsDto))
@@ -54,8 +57,9 @@ public class ReviewsControllerIT {
 		.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
        
         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-	}*/
 	
+	}*/
+	/*
 	@Test
 	public void findAllReviewsAListofReviewsWithOKStatus() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/all");
@@ -67,8 +71,8 @@ public class ReviewsControllerIT {
 		.andExpect(MockMvcResultMatchers.jsonPath("$[1].game.id").value(1))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[1].gamer.id").value(1))
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-	}
-	
+	}*/
+	/*
 	@Test
 	public void findOneReviewsShouldReturnAReviewsWithOKStatus() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/2");
@@ -87,7 +91,7 @@ public class ReviewsControllerIT {
 		.andExpect(MockMvcResultMatchers.status().isNotFound())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value("L'avis d'id 4 n'existe pas"));
 	}
-	
+	/*
 	@Test
 	public void findOneReviewsWithUnknowIdProvideShouldReturnAStatus404() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/4");
@@ -95,7 +99,7 @@ public class ReviewsControllerIT {
 		.andExpect(MockMvcResultMatchers.status().isNotFound())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value("L'avis d'id 4 n'existe pas"));
 	}
-	
+	*/
 	
 	public static String asJsonString(final Object obj) {
 	    try {

@@ -34,7 +34,7 @@ public class GameControllerIT {
 	public void getAll_Should_Return_AList() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/game/all");
 		this.mockMvc.perform(requestBuilder)
-		/*.andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(12))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("GTFO"))
@@ -68,7 +68,7 @@ public class GameControllerIT {
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value("10"));
 	}
 	
-	@Test
+	/*@Test
 	public void addGame_Should_Save_A_Game() throws Exception {
 		GameDto gameDto = new GameDto();
 		gameDto.setBusinessModelName("Free to play");
@@ -87,7 +87,7 @@ public class GameControllerIT {
 				/*.content(jsonBody)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());*/
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/game/save")
 		 .content(asJsonString(gameDto))
@@ -96,12 +96,12 @@ public class GameControllerIT {
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(11))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Mon jeui"));
-		/*this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 				.content(jsonBody)
 		.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
        
-        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());*/
-	}
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+	}*/
 	
 	public static String asJsonString(final Object obj) {
 	    try {
