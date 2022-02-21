@@ -6,13 +6,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,7 +31,8 @@ import fr.orsys.roman.projet_final_plateforme_jeu_video.service.impl.ModeratorSe
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ModeratorServiceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class ModeratorServiceTest {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -42,7 +44,11 @@ class ModeratorServiceTest {
 
 	@InjectMocks
 	ModeratorService moderatorService = new ModeratorServiceImpl(moderatorRepository, passwordEncoder());
-
+	
+	UserModeratorDto moderatorDto;
+	
+	Moderator moderatorExpected;
+	
 	
 //	WTF???? repo null?
 	@Test
@@ -55,7 +61,7 @@ class ModeratorServiceTest {
 		userModeratorDto.setEmail("blabla@gmail.com");
 		userModeratorDto.setPhoneNumber("0123456789");
 
-		Moderator moderatorExpected = new Moderator();
+		moderatorExpected = new Moderator();
 		moderatorExpected.setId(4L);
 		moderatorExpected.setPseudo("blabla");
 		moderatorExpected.setPassword("azerty");

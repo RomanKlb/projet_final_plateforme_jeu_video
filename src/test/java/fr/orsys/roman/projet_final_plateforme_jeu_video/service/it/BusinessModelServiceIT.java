@@ -62,14 +62,16 @@ public class BusinessModelServiceIT {
 		
 		assertNotNull(model);
 		
-		assertEquals(3L, model.getId());
+		int size = businessModelService.getAll().size();
+		assertEquals(size, model.getId());
 		assertEquals("Pay to win", model.getName());
 	}
 	
 	@Test
 	@Order(4)
 	void deleteModel_argIsValid_shouldDeleteEntry() {
-		assertTrue(businessModelService.deleteById(1L));
-		assertNull(businessModelService.getById(1L));
+		int size = businessModelService.getAll().size();
+		assertTrue(businessModelService.deleteById((long) size));
+		assertNull(businessModelService.getById((long) size));
 	}
 }

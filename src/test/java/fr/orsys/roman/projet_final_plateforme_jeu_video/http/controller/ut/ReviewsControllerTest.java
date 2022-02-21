@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -89,7 +91,6 @@ public class ReviewsControllerTest {
 		review.setGamer(gamer);
 		review.setRating(18f);
 		
-		String jsonBody = "{\"description\": \"Blablabla\", \"gameId\": 1, \"gamerId\": 1, \"rating\": 8}";
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 				.content(jsonBody)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -97,7 +98,7 @@ public class ReviewsControllerTest {
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
 		
 		//when(reviewsService.saveOneReviews(reviewsDto)).then;
-		when
+		//when
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/reviews/save")
 				.content(asJsonString(reviewsDto))
@@ -110,8 +111,8 @@ public class ReviewsControllerTest {
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
 
 		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-	}*/
-
+	}
+*/
 	@Test
 	public void findAllReviewsAListofReviewsWithOKStatus() throws Exception {
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/reviews/all");

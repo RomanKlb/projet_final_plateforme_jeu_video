@@ -23,11 +23,11 @@ class GamerServiceTest {
 	GamerRepository gamerRepository;
 
 	
-	@Test
+	/*@Test
 	@Order(1)
 	void shouldSaveGamer() {
 		
 		
-	}
+	}*/
 
 }

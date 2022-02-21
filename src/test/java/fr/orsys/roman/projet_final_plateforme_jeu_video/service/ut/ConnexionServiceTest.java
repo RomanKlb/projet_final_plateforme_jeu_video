@@ -26,13 +26,13 @@ class ConnexionServiceTest {
 	@Mock
 	ModeratorRepository moderatorRepository;
 
-	@Test
+	/*@Test
 	@Order(1)
 	void shouldGetAuthenticateGamer() {
 
 		//??
 
-	}
+	}*/
 
 
 
