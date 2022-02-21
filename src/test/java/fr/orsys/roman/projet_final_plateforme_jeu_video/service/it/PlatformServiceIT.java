@@ -27,13 +27,14 @@ class PlatformServiceIT {
 	@Test
 	@Order(3)
 	void testCreatePlatform() {
-		Platform p = platformService.createPlatform("Xbox One");
+		Platform p = platformService.createPlatform("Xbox One Test");
 		
 		assertNotNull(p);
-		assertEquals("Xbox One", p.getName());
+		assertEquals("Xbox One Test", p.getName());
 		
-		assertTrue(platformService.getPlatforms().size() > 3);
-		assertEquals(platformService.getPlatformById(4L).getName(), "Xbox One");
+		int size = platformService.getPlatforms().size();
+		assertTrue(size > 13);
+		assertEquals(platformService.getPlatformById((long) size).getName(), "Xbox One Test");
 	}
 
 	@Test
@@ -43,7 +44,7 @@ class PlatformServiceIT {
 		
 		
 		assertTrue(platforms.size() > 0);
-		assertEquals(platforms.get(0).getName(), "PlayStation");
+		assertEquals(platforms.get(0).getName(), "PC");
 	}
 
 	@Test
@@ -53,14 +54,15 @@ class PlatformServiceIT {
 		
 		
 		assertNotNull(platform);
-		assertEquals(platform.getName(), "PlayStation");
+		assertEquals(platform.getName(), "PC");
 	}
 
 	@Test
 	@Order(4)
 	void testDeletePlatform() {
-		assertTrue(platformService.deletePlatform(3L));
-		Platform platform = platformService.getPlatformById(3L);
+		int size = platformService.getPlatforms().size();
+		assertTrue(platformService.deletePlatform((long) size));
+		Platform platform = platformService.getPlatformById((long) size);
 		
 		
 		assertNull(platform);
