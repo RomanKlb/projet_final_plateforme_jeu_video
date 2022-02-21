@@ -1,6 +1,7 @@
 package fr.orsys.roman.projet_final_plateforme_jeu_video.service.ut;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,12 +10,16 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.Moderator;
 import fr.orsys.roman.projet_final_plateforme_jeu_video.business.dto.UserModeratorDto;
@@ -32,7 +37,7 @@ class ModeratorServiceTest {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Mock
+	@MockBean
 	ModeratorRepository moderatorRepository;
 
 	@InjectMocks
@@ -56,16 +61,13 @@ class ModeratorServiceTest {
 		moderatorExpected.setPassword("azerty");
 		moderatorExpected.setEmail("blabla@gmail.com");
 		moderatorExpected.setPhoneNumber("0123456789");
-
-//		when(itemMapper.mapCreateItemDtoToEntity(any()))
-//		.thenReturn(returnedItem);
 		
 		when(moderatorRepository.save(any())).thenReturn(moderatorExpected);
-		
 		Moderator result = moderatorService.createUserModerator(userModeratorDto);
 
-
-		verify(moderatorService.createUserModerator(any(UserModeratorDto.class)));
+//		verify(moderatorRepository).save(any(Moderator.class));
+//		verify(moderatorService.createUserModerator(any(UserModeratorDto.class)));
+		assertEquals(result, moderatorExpected);
 
 
 	}
