@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller"}];updateSearchResults();

@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"fr.orsys.roman.projet_final_plateforme_jeu_video.http.controller","l":"ReviewsControllerTest"}];updateSearchResults();
